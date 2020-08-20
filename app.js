@@ -1,4 +1,11 @@
 // console.log(d3)
+// d3.select('div') //the class div or whatever
+//     .selectAll('p') //all paragraphgs
+//     .data(fake) //can be araray or full of strings //binds data
+//     .enter() //which are missing?
+//     .append('p') //appends p for all missing
+//     .text( dta => dta.region) //dta gives access to each data node
+//     // .selectAll();
 
 const fake = [
     {id: 'd1', value: 10, region: 'USA'},
@@ -16,13 +23,6 @@ const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
 //gives us different values to translate vals to other num
 
 
-// d3.select('div') //the class div or whatever
-//     .selectAll('p') //all paragraphgs
-//     .data(fake) //can be araray or full of strings //binds data
-//     .enter() //which are missing?
-//     .append('p') //appends p for all missing
-//     .text( dta => dta.region) //dta gives access to each data node
-//     // .selectAll();
 
 const container = d3.select('svg')
         .classed('container', true) //gives it a class name
@@ -43,3 +43,11 @@ const bars = container
 // setTimeout(() => {
 //     bars.data(fake.slice(0, 2)).exit().remove();
 // }, 2000)
+
+// const text = bars.selectAll('text')
+//     .data(fake)
+//     .enter()
+//     .append("text")
+//     .text(d =>( d.region))
+//     // .attr('x', data => xScale -)
+//     // .attr('y', data => )
