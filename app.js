@@ -1,17 +1,17 @@
-// console.log(d3)
-// d3.select('div') //the class div or whatever
-//     .selectAll('p') //all paragraphgs
-//     .data(fake) //can be araray or full of strings //binds data
-//     .enter() //which are missing?
-//     .append('p') //appends p for all missing
-//     .text( dta => dta.region) //dta gives access to each data node
-//     // .selectAll();
+// // console.log(d3)
+// // d3.select('div') //the class div or whatever
+// //     .selectAll('p') //all paragraphgs
+// //     .data(fake) //can be araray or full of strings //binds data
+// //     .enter() //which are missing?
+// //     .append('p') //appends p for all missing
+// //     .text( dta => dta.region) //dta gives access to each data node
+// //     // .selectAll();
 
-const fake = [
-    {id: 'd1', value: 10, region: 'USA'},
-    {id: 'd2', value: 11, region: 'SA'},
-    {id: 'd3', value: 12, region: 'US'},
-    {id: 'd4', value: 6, region: 'U23542'},
+// const fake = [
+//     {id: 'd1', value: 10, region: 'USA'},
+//     {id: 'd2', value: 11, region: 'SA'},
+//     {id: 'd3', value: 12, region: 'US'},
+//     {id: 'd4', value: 6, region: 'U23542'},
     // {id: 'd5', value: 15, region: 'US1231A'},
     // {id: 'd6', value: 12, region: 'U12312SA'},
     // {id: 'd7', value: 6, region: 'US123A'},
