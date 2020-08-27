@@ -21,8 +21,7 @@ import sfaqi from './js db/SanFranciscoCA.json';
 import beijing from './js db/beijing-air-quality.json';
 import paris from './js db/paris-air-quality.json';
 
-console.log(d3.)
-const xScale = d3.scaleBand().domain(fake.map(dataPoint => dataPoint.region)).rangeRound([0,250]).padding(0.1);
+const xScale = d3.scaleBand().domain(sfaqi.map(dataPoint => dataPoint.date)).rangeRound([0,250]).padding(0.1);
 //ordinal scale, all of them uniform
 const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
 //gives us different values to translate vals to other num
@@ -41,9 +40,9 @@ const bars = container
     .classed('bar', true)
     .text(d => d)
     .attr('width', xScale.bandwidth())
-    .attr('height', data => 200 - yScale(data.value))
-    .attr('x', data => xScale(data.region))
-    .attr('y', data => yScale(data.value))
+    .attr('height', data => 200 - yScale(data.pm25))
+    .attr('x', data => xScale(data.date))
+    .attr('y', data => yScale(data.pm25))
 
 // setTimeout(() => {
 //     bars.data(fake.slice(0, 2)).exit().remove();
