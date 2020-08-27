@@ -7,16 +7,21 @@
 // //     .text( dta => dta.region) //dta gives access to each data node
 // //     // .selectAll();
 
-const fake = [
-    {id: 'd1', value: 10, region: 'USA'},
-    {id: 'd2', value: 11, region: 'SA'},
-    {id: 'd3', value: 12, region: 'US'},
-    {id: 'd4', value: 6, region: 'U23542'},
-    {id: 'd5', value: 15, region: 'US1231A'},
-    {id: 'd6', value: 12, region: 'U12312SA'},
-    {id: 'd7', value: 6, region: 'US123A'},
-];
+// const fake = [
+//     {id: 'd1', value: 10, region: 'USA'},
+//     {id: 'd2', value: 11, region: 'SA'},
+//     {id: 'd3', value: 12, region: 'US'},
+//     {id: 'd4', value: 6, region: 'U23542'},
+//     {id: 'd5', value: 15, region: 'US1231A'},
+//     {id: 'd6', value: 12, region: 'U12312SA'},
+//     {id: 'd7', value: 6, region: 'US123A'},
+// ];
 
+import sfaqi from './js db/SanFranciscoCA.json';
+import beijing from './js db/beijing-air-quality.json';
+import paris from './js db/paris-air-quality.json';
+
+console.log(d3.)
 const xScale = d3.scaleBand().domain(fake.map(dataPoint => dataPoint.region)).rangeRound([0,250]).padding(0.1);
 //ordinal scale, all of them uniform
 const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
@@ -30,7 +35,7 @@ const container = d3.select('svg')
 
 const bars = container
     .selectAll('.bar')
-    .data(fake)
+    .data(sfaqi)
     .enter()
     .append('rect') //valid ele
     .classed('bar', true)
