@@ -1,12 +1,14 @@
 
 // // // console.log(d3)
-import * as data from './js db/SanFranciscoCA.js';
+import {db} from './jss/SanFranciscoCA'
+// import * as data from './js db/SanFranciscoCA.js';
 // const sfaqi = require("./js db/SanFranciscoCA.json")
-function load() {
-    let aqi = JSON.parse(dataSF);
-    console.log(aqi[0]);
-}
-load();
+
+// function load() {
+//     let aqi = JSON.parse(dataSF);
+//     console.log(aqi[0]);
+// }
+// load();
 
 // function loadJSON(cb) {
 //     let sfaqi = new XMLHttpRequest();
@@ -20,9 +22,11 @@ load();
 //     sfaqi.send(null)
 // }
 
-// loadJSON(function(json) {
-//     console.log(json)
-// });
+loadJSON(function(db) {
+    console.log(db)
+});
+console.log(loadJSON(db))
+
 
 
 // // const sfURL = './js db/SanFranciscoCA.json';
