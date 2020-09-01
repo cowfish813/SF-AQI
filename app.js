@@ -1,8 +1,11 @@
 
 // // // console.log(d3)
-import {db} from './jss/SanFranciscoCA'
+// import {db} from './jss/SanFranciscoCA'
 // import * as data from './js db/SanFranciscoCA.js';
 // const sfaqi = require("./js db/SanFranciscoCA.json")
+
+var mydata = JSON.parse(SanFranciscoCA)
+
 
 // function load() {
 //     let aqi = JSON.parse(dataSF);

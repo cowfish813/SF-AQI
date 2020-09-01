@@ -1,4 +1,4 @@
-export const db = [
+[
  {
    "date": "2019/7/2",
    "pm25": 35,
