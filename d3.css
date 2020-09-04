@@ -1,4 +1,15 @@
-.container {
+body {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 1140px;
+	margin: 0 auto;
+	font-size: 14px;
+	background-color: #eee;
+	line-height: 115%;
+}
+
+
+/* demo code */
+/* .container {
     width: 30rem;
     height: 15rem;
     border: 1px solid saddlebrown;
@@ -6,18 +17,11 @@
 
 .bar {
     fill: blueviolet;
-}
+} */
 
 /* element {
 } */
-body {
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
-    width: 1140px;
-    margin: 0 auto;
-    font-size: 14px;
-    background-color: #eee;
-    line-height: 115%;
-}
+
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126

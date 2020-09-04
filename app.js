@@ -12,33 +12,37 @@ let margin = {top: 10, right: 30, bottom: 30, left: 50},
   height = 400 - margin.top - margin.bottom
 
 const svg = d3.select('#my_dataviz')
-    .append("svg")
+    .append("svg") //adds svg ele
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv",
-    (d) => ({ date: d3.timeParse('%Y-%m-%d')(d.date), value: d.pm25}),
+    (d) => ({ date: d3.timeParse('%Y-%m-%d')(d.date), pm25: d.pm25}),
     //first 90 days....maybe remove this part later, starting with data.filter
+    
     (data) => {
-      // data = data.filter((d, i) => (i > 90))
+      data = data.filter((d, i) => (i > 100))
       
       //adds x axis
         let x = d3.scaleTime()
-          .domain(d3.extent(data, (d) => (d.date)))
+          .domain(d3.extent(data, (d) => (+d.pm25)))
           .range([0, width]);
+          // console.log(d)
         svg.append("g")
           .attr("transform", "translate(0" + (height + 5) + ")")
           .call(d3.axisBottom(x).ticks(5).tickSizeOuter(0));
 
         //adds y axis
         let y = d3.scaleLinear()
-          .domain( d3.extent(data, (d) => (+d.pm25))) //why is there a plus?
+          .domain( d3.extent(data, (d) => (console.log(d)))) //why is there a plus?
           .range([height, 0]);
         svg.append("g")
           .attr("transform", "translate(-5, 0)")
           .call(d3.axisLeft(y).tickSizeOuter(0));
+
+        //add line
         svg.append("path")
           .datum(data)
           .attr("fill", "#69b3a2")
@@ -47,8 +51,10 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
           .attr("d", d3.area()
             .x( d => (x(d.date)))
             .y0(height)
-            .y1( d => y(d.value))
+            .y1( d => y(d.pm25))
             )
+
+
       // Add the line
       svg.append("path")
         .datum(data)
@@ -57,7 +63,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
         .attr("stroke-width", 4)
         .attr("d", d3.line()
           .x(function (d) { return x(d.date) })
-          .y(function (d) { return y(d.value) })
+          .y(function (d) { return y(d.pm25) })
         )
 
       // Add the line
@@ -65,13 +71,13 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
         .data(data)
         .enter()
         .append("circle")
-        .attr("fill", "red")
-        .attr("stroke", "none")
-        .attr("cx", function (d) { return x(d.date) })
-        .attr("cy", function (d) { return y(d.value) })
-        .attr("r", 3)
+          .attr("fill", "red")
+          .attr("stroke", "none")
+          .attr("cx", function (d) { return x(d.date) })
+          .attr("cy", function (d) { return y(d.pm25) })
+          .attr("r", 3)
 
-    },
+    }
     
 
 );
