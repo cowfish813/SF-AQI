@@ -1,7 +1,4 @@
 // console.log(d3)
-// import mydata from './jss/SanFranciscoCA'
-// import * as data from './js db/SanFranciscoCA.js';
-// const sfData = require("./js db/SanFranciscoCA.json")
 
 
 const container = d3.select('svg')
