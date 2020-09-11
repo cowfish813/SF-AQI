@@ -20,8 +20,8 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
     //first 90 days....maybe remove this part later, starting with data.filter
     
     (data) => {
-      data = data.filter((d, i) => (i > 100))
-      
+      data = data.filter((d, i) => (i > 10))
+      // 
       //adds x axis
         let x = d3.scaleTime()
           .domain(d3.extent(data, (d) => (+d.pm25)))
