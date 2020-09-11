@@ -33,7 +33,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
 
         //adds y axis
         let y = d3.scaleLinear()
-          .domain( d3.extent(data, (d) => (console.log(d)))) //why is there a plus?
+          .domain( d3.extent(data, (d) => (d.pm25))) //why is there a plus?
           .range([height, 0]);
         svg.append("g")
           .attr("transform", "translate(-5, 0)")
