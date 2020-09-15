@@ -17,11 +17,13 @@ let svg = d3.select('#my_dataviz')
 
 
 d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv",
-  function (d) {
-    // console.log(d)
-    // console.log(d3.timeParse("%Y/%m/%d")(d.date))
-    return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //in brackets because it's a string
-  },
+  // function (d) {
+  //   // console.log(d3.timeParse("%Y/%m/%d")(d.date))
+  //   return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //in brackets because it's a string
+  // },
+  (d) => ({ date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] }),
+
+  
   // Now I can use this dataset:
   function (data) {
     // console.log(data)
