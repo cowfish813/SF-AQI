@@ -1,7 +1,7 @@
-// console.log(d3)
+// // console.log(d3)
 
-let container = d3.select('svg')
-    .classed('container', true);
+// let container = d3.select('svg')
+//     .classed('container', true);
 
 let margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1080 - margin.left - margin.right
@@ -21,9 +21,11 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   //   // console.log(d3.timeParse("%Y/%m/%d")(d.date))
   //   return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //in brackets because it's a string
   // },
-  (d) => ({ date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] }),
+  (d) => {
+    return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //change year
+  },
 
-  
+
   // Now I can use this dataset:
   function (data) {
     // console.log(data)
@@ -61,4 +63,4 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
       .attr("cy", function (d) { return y(d.pm25) })
       .attr("r", 5)
       .attr("fill", "#69b3a2")
-  })
+  });
