@@ -24,8 +24,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   (d) => {
     return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //change year
   },
-
-
+  
   // Now I can use this dataset:
   function (data) {
     // console.log(data)
