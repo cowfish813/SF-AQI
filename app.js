@@ -1,4 +1,3 @@
-// const fetch = require('node-fetch')
 // // console.log(d3)
 
 // let container = d3.select('svg')
@@ -27,18 +26,18 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   },
 
   // Now I can use this dataset:
-  function (data) {
+  (data) => {
     // console.log(data)
     // Add X axis --> it is a date format
-    var x = d3.scaleTime()
-      .domain(d3.extent(data, function (d) { return d.date; }))
+    const x = d3.scaleTime()
+      .domain(d3.extent(data, (d) => { return d.date; }))
       .range([0, width]);
 
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
     // Add Y axis
-    var y = d3.scaleLinear()
+    const y = d3.scaleLinear()
       .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
       .range([height, 0]);
 
@@ -46,14 +45,15 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
       .call(d3.axisLeft(y));
       
     // Add the line
-    svg.append("path")
+    svg
+      .append("path")
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "#69b3a2")
       .attr("stroke-width", 1.5)
       .attr("d", d3.line()
-        .x(function (d) { return x(d.date) })
-        .y(function (d) { return y(d.pm25) })
+        .x((d) => { return x(d.date) })
+        .y((d) => { return y(d.pm25) })
       )
     // Add the points
     svg
@@ -62,8 +62,8 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
       .data(data)
       .enter()
       .append("circle")
-      .attr("cx", function (d) { return x(d.date) })
-      .attr("cy", function (d) { return y(d.pm25) })
+      .attr("cx", (d) => { return x(d.date) })
+      .attr("cy", (d) => { return y(d.pm25) })
       .attr("r", 5)
       .attr("fill", "#69b3a2")
   });
