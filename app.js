@@ -32,6 +32,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
     var x = d3.scaleTime()
       .domain(d3.extent(data, function (d) { return d.date; }))
       .range([0, width]);
+
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
@@ -39,8 +40,10 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
     var y = d3.scaleLinear()
       .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
       .range([height, 0]);
+
     svg.append("g")
       .call(d3.axisLeft(y));
+      
     // Add the line
     svg.append("path")
       .datum(data)
