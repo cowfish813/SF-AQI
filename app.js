@@ -1,3 +1,4 @@
+// const fetch = require('node-fetch')
 // // console.log(d3)
 
 // let container = d3.select('svg')
@@ -22,7 +23,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   //   return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //in brackets because it's a string
   // },
   (d) => {
-    return { date: d3.timeParse("2018/%m/%d")(d.date), pm25: d[" pm25"] } //change year
+    return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //change year
   },
 
   // Now I can use this dataset:
