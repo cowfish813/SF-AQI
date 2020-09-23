@@ -14,15 +14,23 @@ let svg = d3.select('#my_dataviz')
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// const data = d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv")
+// const data = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv"
+
+const parseTime = d3.timeParse()
 
 
-d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv",
+
+
+d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv").then(function(d, error) {
+  // if (error) throw error,
+  // console.log(d),
   // function (d) {
   //   // console.log(d3.timeParse("%Y/%m/%d")(d.date))
   //   return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //in brackets because it's a string
   // },
   (d) => {
-    return { date: d3.timeParse("%Y/%m/%d")(d.date), pm25: d[" pm25"] } //change year
+    return { date: d3.timeParse("2018/%m/%d")(d.date), pm25: d[" pm25"] } //change year
   },
 
   // Now I can use this dataset:
@@ -66,7 +74,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
       .attr("cy", (d) => { return y(d.pm25) })
       .attr("r", 5)
       .attr("fill", "#69b3a2")
-  });
+  }});
 
 
 
