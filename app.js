@@ -41,13 +41,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
 
 
   
-  // svg.selectAll("dot")
-  //     .data(data)
-  //   .enter().append("circle")
-  //     .attr("r", 5)
-  //     .attr("cx", d => (x(d.date)))
-  //     .attr("cy", d => (y(d[" pm25"])))
-  //     .attr("fill", "#69b3a2") //color
+
   
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
@@ -67,7 +61,9 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   // Add the line
   svg
     .append("path")
-    .datum(data)
+    .data([data])
+      // same thing?
+    // .datum(data)
     .attr("fill", "none")
     .attr("stroke", "#69b3a2")
     .attr("stroke-width", 1.5)
@@ -77,17 +73,33 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
     )
 
     // Add the points
-  svg
-    .append("g")
-    .selectAll("dot")
+  // svg
+  //   .append("g")
+  //   .selectAll("dot")
+  //   .data(data)
+  //   .enter()
+  //   .append("circle")
+  //   .attr("cx", (d) => { return x(d.date) })
+  //   .attr("cy", (d) => { return y(d.pm25) })
+  //   .attr("r", 5)
+  //   .attr("fill", "#69b3a2")
+
+    //add point
+  svg.selectAll("dot")
     .data(data)
-    .enter()
-    .append("circle")
-    .attr("cx", (d) => { return x(d.date) })
-    .attr("cy", (d) => { return y(d.pm25) })
-    .attr("r", 5)
-    .attr("fill", "#69b3a2")
+    .enter().append("circle")
+      .attr("r", 5)
+      .attr("cx", d => (x(d.date)))
+      .attr("cy", d => (y(d.pm25)))
+      .attr("fill", "#69b3a2") //color
 });
+
+
+
+
+
+
+//v4 useless notes
 
 // d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv").then(function(d, error) {
 //   // if (error) throw error,
