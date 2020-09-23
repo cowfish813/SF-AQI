@@ -17,8 +17,10 @@ const svg = d3.select('#my_dataviz')
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+//kinda useless atm, but might be handy for modular code
+// const parseTime = d3.timeParse("%Y/%m/%d");
 
-const parseTime = d3.timeParse("%Y/%m/%d");
+// var myData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const x = d3.scaleTime()
   // .domain(d3.extent(data, (d) => { return d.date; })) //no data yet, append later?
@@ -29,22 +31,29 @@ const y = d3.scaleLinear()
   .range([height, 0]);
 
 
-d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv").then((data) => {
-  // console.log(data)
+d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv").then((data) => {
+  
   data.forEach(d => {
-    
-    d.date = parseTime(d.date);
-    // if (d[" pm25"] !== null) 
+
+    d.date = d3.timeParse("%Y/%m/%d")(d.date)
+    // d.date = d3.timeFormat("%y/%m/%d")(d.date)
     d.pm25 = d[" pm25"];
   });
 
-  x.domain(d3.extent(data, (d) => { return d.date; }));
-  y.domain([0, 240]); //use a Math.max(data.)something instead of 2nd arg
+  x.domain(d3.extent(data, (d) => { 
+    console.log(d.date)
+    return d.date;
+    // return d3.timeParse("%b")
+  }));
 
 
 
+    //set x axis for month?
+        //find a way to key into month
+  // x.domain(myData)
   
 
+  y.domain([0, 240]); //use a Math.max(data.)something instead of 2nd arg
   
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
@@ -54,6 +63,8 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   .call(d3.axisLeft(y))
   
   // Add the line
+        //later on, set for hover on dots
+
   svg
     .data([data])
     .append("path")
@@ -70,6 +81,7 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
 
 
     //add point
+        //later on => color the dots based on severity
   svg.selectAll("dot")
     .data(data)
     .enter().append("circle")
