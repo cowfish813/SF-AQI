@@ -1,3 +1,7 @@
+  //might not be necesesary anymore?
+// const valueLine = d3.line()
+//   .x((d) => (x(d.date)))
+//   .y((d) => (y(d[" pm25"])));
 // const data = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv"
 
 
@@ -25,16 +29,12 @@ const y = d3.scaleLinear()
   .range([height, 0]);
 
 
-  //might not be necesesary anymore?
-const valueLine = d3.line()
-  .x((d) => (x(d.date)))
-  .y((d) => (y(d[" pm25"])));
-
-
 d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv").then((data) => {
   // console.log(data)
   data.forEach(d => {
+    
     d.date = parseTime(d.date);
+    // if (d[" pm25"] !== null) 
     d.pm25 = d[" pm25"];
   });
 
@@ -53,18 +53,10 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   svg.append("g")
   .call(d3.axisLeft(y))
   
-  // Add the valueline path.
-  // svg.append("path")
-  //   .data([data])
-  //   .attr("class", "line")
-  //   .attr("d", valueLine)
-    // .attr("fill", "#69b3a2") //color
-  // Add the valueline path.
-
   // Add the line
   svg
-    .append("path")
     .data([data])
+    .append("path")
       // same thing?
     // .datum(data)
     .attr("fill", "none")
@@ -74,6 +66,19 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
       .x((d) => { return x(d.date) })
       .y((d) => { return y(d.pm25) })
     )
+
+
+
+    //add point
+  svg.selectAll("dot")
+    .data(data)
+    .enter().append("circle")
+      .attr("r", 5)
+      .attr("cx", d => (x(d.date)))
+      .attr("cy", d => (y(d.pm25)))
+      .attr("fill", "#69b3a2") //color
+});
+
 
     // Add the points
   // svg
@@ -87,15 +92,11 @@ d3.csv("https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/sa
   //   .attr("r", 5)
   //   .attr("fill", "#69b3a2")
 
-    //add point
-  svg.selectAll("dot")
-    .data(data)
-    .enter().append("circle")
-      .attr("r", 5)
-      .attr("cx", d => (x(d.date)))
-      .attr("cy", d => (y(d.pm25)))
-      .attr("fill", "#69b3a2") //color
-});
 
-
-
+  // Add the valueline path.
+  // svg.append("path")
+  //   .data([data])
+  //   .attr("class", "line")
+  //   .attr("d", valueLine)
+    // .attr("fill", "#69b3a2") //color
+  // Add the valueline path.
