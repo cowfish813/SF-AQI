@@ -1,12 +1,11 @@
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 const data = {};
-let status = "";
 
 //widget
 // "/san-francisco/san-francisco-arkansas-street" //can change city
 // token "9c249e12bd6b8b2edc5681e555d3f5454a6488b3" //how to hide this key without jquery/react?
-const widget = fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
+const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
   .then(res => (res.json()))
   .then(res => {
     if (res) {
@@ -14,37 +13,42 @@ const widget = fetch('https://api.waqi.info/feed/california/san-francisco/san-fr
         data[key] = res[key];
       };
       const aqi = data.data.aqi;
-      if (aqi > 300) {
-        status = "Hazardous";
-        document.getElementById("aqi_widget").style.backgroundColor ="brown";
-      } else if (aqi > 200) {
-        status = "Very Unhealthy";
-        document.getElementById("aqi_widget").style.backgroundColor ="puple";
-      } else if (aqi > 151) {
-        status = "Unhealthy";
-        document.getElementById("aqi_widget").style.backgroundColor = "red";
-      } else if (aqi > 150) {
-        status = "Unhealthy for Sensitive Groups";
-        document.getElementById("aqi_widget").style.backgroundColor = "orange";
-      } else if (aqi > 50) {
-        status = "Moderate";
-        document.getElementById("aqi_widget").style.backgroundColor = "yellow";
+      let status = "";
+        if (aqi > 300) {
+          status = "Hazardous";
+          document.getElementById("aqi_widget").style.backgroundColor ="brown";
+        } else if (aqi > 200) {
+          status = "Very Unhealthy";
+          document.getElementById("aqi_widget").style.backgroundColor ="puple";
+        } else if (aqi > 151) {
+          status = "Unhealthy";
+          document.getElementById("aqi_widget").style.backgroundColor = "red";
+        } else if (aqi > 150) {
+          status = "Unhealthy for Sensitive Groups";
+          document.getElementById("aqi_widget").style.backgroundColor = "orange";
+        } else if (aqi > 50) {
+          status = "Moderate";
+          document.getElementById("aqi_widget").style.backgroundColor = "yellow";
+        } else {
+          status = "Good"
+          document.getElementById("aqi_widget").style.backgroundColor = "green";
+        }
+        //assembles widget without the jank
+        document.getElementById("aqi_widget").style.border = "1px black solid"
+        document.getElementById("title_conditions").innerHTML = "Conditions Today"
+        document.getElementById("status").innerHTML = status;
+        document.getElementById("aqi").innerHTML = data.data.aqi;
+        document.getElementById("city").innerHTML = data.data.city.name;
       } else {
-        status = "Good"
-        document.getElementById("aqi_widget").style.backgroundColor = "green";
-      }
-      document.getElementById("aqi_widget").style.border = "1px black solid"
-      document.getElementById("title_conditions").innerHTML = "Conditions Today"
-      document.getElementById("status").innerHTML = status;
-      document.getElementById("aqi").innerHTML = data.data.aqi;
-      document.getElementById("city").innerHTML = data.data.city.name;
-    } else {
-      console.log("out of calls!? maybe i should've hid the key :C");
-    };
+        console.log("out of calls!? maybe i should've hid the key :C");
+      };
   })
   .catch(err => {
     console.log(err);
-  });
+  }));
+
+widget();
+setInterval(widget, 50000);
 
 console.log(data);
 
