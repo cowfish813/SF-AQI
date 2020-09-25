@@ -1,8 +1,13 @@
 
+//api hit
 const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
   .then(res => res.json())
+  .then(res => (res.data))
+  // .then(res => (now = res.data))
+  // .then(console.log(res))
 
-console.log(apiHit)
+console.log(apiHit.then(res => (res.data)))
+// console.log(now)
   //might not be necesesary anymore?
 // const valueLine = d3.line()
 //   .x((d) => (x(d.date)))
