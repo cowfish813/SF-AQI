@@ -1,3 +1,8 @@
+
+const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
+  .then(res => res.json())
+
+console.log(apiHit)
   //might not be necesesary anymore?
 // const valueLine = d3.line()
 //   .x((d) => (x(d.date)))
@@ -34,7 +39,7 @@ d3.csv(csvSF).then((data) => {
   });
 
   x.domain(d3.extent(data, (d) => { 
-    console.log(d)
+    // console.log(d)
     return d.date;
   }));
     //domain *sets input domain
@@ -53,6 +58,14 @@ d3.csv(csvSF).then((data) => {
   .call(d3.axisLeft(y))
   
 
+  svg.selectAll("dot")
+    .data(data)
+    .enter().append("circle")
+      .attr("r", 5)
+      .attr("cx", d => (x(d.date)))
+      .attr("cy", d => (y(d.pm25)))
+      .attr("fill", "#69b3a2") //color
+
 
 
   // Add the line
@@ -63,24 +76,25 @@ d3.csv(csvSF).then((data) => {
   // .datum(data)
     .append("path")
     .attr("fill", "none")
-    .attr("stroke", "#69b3a2")
-    .attr("stroke-width", 1.5)
     .attr("d", d3.line()
       .x((d) => { return x(d.date) })
       .y((d) => { return y(d.pm25) })
     )
+    .attr("stroke", "#69b3a2")
+    .attr("stroke-width", 1.5)
+    // .on("mouseover", function (d) {
+    //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
+    //     .attr('fill-opacity', 0.3);
+    // })
+    // .on("mouseout", function (d) {
+    //   d3.select(this).style("fill", "none")
+    //     .attr('fill-opacity', 1);
+    // });
 
 
 
     //add point
         //later on => color the dots based on severity
-  svg.selectAll("dot")
-    .data(data)
-    .enter().append("circle")
-      .attr("r", 5)
-      .attr("cx", d => (x(d.date)))
-      .attr("cy", d => (y(d.pm25)))
-      .attr("fill", "#69b3a2") //color
 });
 
 
