@@ -1,16 +1,33 @@
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 const data = {};
+let status = "Good";
 
-const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
+const apiHit = fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
   .then(res => (res.json()))
   .then(res => {
     if (res) {
       for (let key in res) {
         data[key] = res[key];
       };
+      const aqi = data.data.aqi;
+      if (data.data.aqi > 300) {
+        status = "Hazardous"
+      } else if (aqi > 200) {
+        status = "Very Unhealthy"
+      } else if (aqi > 151) {
+        status = "Unhealthy"
+      } else if (aqi > 150) {
+        status = "Unhealthy for Sensitive Groups"
+      } else if (aqi > 50) {
+        status = "Moderate"
+      }
+      console.log(status)
+      document.getElementById("status").innerHTML = status;
+      document.getElementById("aqi").innerHTML = data.data.aqi;
+      document.getElementById("city").innerHTML = data.data.city.name;
     } else {
-      console.log("Broken res :(")
+      console.log("Broken res :(, out of calls?")
     };
   })
   .catch(err => {
@@ -19,7 +36,8 @@ const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2e
 
   console.log(data)
 
-  // document.getElementById("aqi_widget")
+  // document.getElementById("").innerHTML = 11;
+  // document.getElementById("").innerHTML = 11;
 
 
 

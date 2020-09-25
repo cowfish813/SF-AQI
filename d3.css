@@ -48,13 +48,25 @@ body {
 	margin-bottom: 2rem;
 }
 
+.APIwidget{
+	border: 1px black solid;
+	width: 15rem;
+	height: 15rem;
+	border-radius: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
 .legend {
 	display: flex;
 	flex-wrap: wrap;
-	border: solid black 1px;
+	border: solid white 1px;
 	margin-bottom: 2rem;
 	/* wot. */
-	width: 31.25rem;
+	/* width: 31.25rem; */
+	width: 60rem;
 
 }
 
@@ -62,10 +74,25 @@ body {
 	display: flex;
 	/* flex-wrap: wrap; */
 	justify-content: space-between;
-	border: solid black 1px;
+	border: solid white 1px;
 	padding: 1rem;
 	/* position: absolute; */
+	width: inherit;
 }
+
+.icondicator {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* align-self: center; */
+}
+.icondicator p {
+	/* display: flex;
+	align-items: center;
+	justify-content: center; */
+}
+
 .indicontainer p {
 	width: 4rem;
 	display: flex;
@@ -79,6 +106,24 @@ body {
 }
 
 
+.good {
+	background-color: greenyellow;
+}
+.moderate {
+	background-color: yellow;
+}
+.usg {
+	background-color: orange;
+}
+.uh {
+	background-color: red;
+}
+.vuh {
+	background-color: purple;
+}
+.haz {
+	background-color: brown;
+}
 
 /* pHover:hover {
 	stroke: #69b3a2;

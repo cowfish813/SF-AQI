@@ -15,7 +15,22 @@
         <!-- need something for API hit. i can expose the key for now... -->
     <!-- <script type="text/javascript" src="app.js" defer></script> -->
 
-        
+
+    <!-- does this work? -->
+<script type="text/javascript" charset="utf-8">
+    (function (w, d, t, f) {
+        w[f] = w[f] || function (c, k, n) {
+            s = w[f], k = s['k'] = (s['k'] || (k ? ('&k=' + k) : '')); s['c'] =
+                c = (c instanceof Array) ? c : [c]; s['n'] = n = n || 0; L = d.createElement(t), e = d.getElementsByTagName(t)[0];
+            L.async = 1; L.src = '//feed.aqicn.org/feed/' + (c[n].city) + '/' + (c[n].lang || '') + '/feed.v1.js?n=' + n + k;
+            e.parentNode.insertBefore(L, e);
+        };
+    })(window, document, 'script', '_aqiFeed');    
+</script>
+        <!--  -->
+
+
+
 </head>
 <body>
     <div class="body">
@@ -35,41 +50,81 @@
 
         <div class="midbody">
             <div id="my_dataviz"></div>
+
+            <div class="APIwidget" id="aqi_widget">
+                <span id="status"></span>
+                <span id="aqi"></span>
+                <span id="city"></span>
+                <span id=""></span>
+                <!-- how to extract js object "data" -->
+                <span id="city-aqi-container"></span>
+            </div>
     
             <div class="legend">
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/1.png" alt="">
-                    <p>0-50</p>
+                <div class="indicontainer good">
+                    <div class="icondicator">
+                        <p>Good</p>
+                        <img class="indicator" src="./assets/aqi/1.png" alt="">
+                        <p>0-50</p>
+                    </div>
+                    <p>Air quality is considered satisfactory, and air pollution poses little or no risk</p>
+                    <p>none</p>
                 </div>
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/2.png" alt="">
-                    <p>51-100</p>
+                <div class="indicontainer moderate">
+                    <div class="icondicator">
+                        <p>Moderate</p>
+                        <img class="indicator" src="./assets/aqi/2.png" alt="">
+                        <p>51-100</p>
+                    </div>
+                    <p>Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number
+                    of people who are unusually sensitive to air pollution.</p>
+                    <p>Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
+                    exertion.</p>
                 </div>
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/3.png" alt="">
-                    <p>101-150</p>
+                <div class="indicontainer usg">
+                    <div class="icondicator">
+                        <p>Unhealthy for Sensitive Groups</p>
+                        <img class="indicator" src="./assets/aqi/3.png" alt="">
+                        <p>101-150</p>
+                    </div>
+                    <p>Members of sensitive groups may experience health effects. The general public is not likely to be affected.</p>
+                    <p>Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
+                    exertion.</p>
                 </div>
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/4.png" alt="">
-                    <p>151-200</p>
+                <div class="indicontainer uh">
+                    <div class="icondicator">
+                        <p>Unhealthy</p>
+                        <img class="indicator" src="./assets/aqi/4.png" alt="">
+                        <p>151-200</p>
+                    </div>
+                    <p>Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects</p>
+                    <p>Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor
+                    exertion; everyone else, especially children, should limit prolonged outdoor exertion</p>
                 </div>
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/5.png" alt="">
-                    <p>200-250</p>
+                <div class="indicontainer vuh">
+                    <div class="icondicator">
+                        <p>Very Unhealthy</p>
+                        <img class="indicator" src="./assets/aqi/5.png" alt="">
+                        <p>201-300</p>
+                    </div>
+                    <p>Health warnings of emergency conditions. The entire population is more likely to be affected.</p>
+                    <p>Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion. </p>
                 </div>
-                <div class="indicontainer">
-                    <img class="indicator" src="./assets/aqi/6.png" alt="">
-                    <p>250+</p>
+                <div class="indicontainer haz">
+                    <div  class="icondicator">
+                        <p>Hazardius</p>
+                        <img class="indicator" src="./assets/aqi/6.png" alt="">
+                        <p>301+</p>
+                    </div>
+                    <p>Health alert: everyone may experience more serious health effects</p>
+                    <p>Everyone should avoid all outdoor exertion</p>
                 </div>
             </div>
     
-            <div class="APIwidget" id="aqi_widget">
-                    <!-- how to extract js object "data" -->
-            </div>
+
         </div>
 
         <div class="footer">
-                i'm the foot
         </div>
 
     </div>
