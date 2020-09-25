@@ -1,18 +1,19 @@
+// require('dotenv').config()
+const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv"
 
 //api hit
 const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
-  .then(res => res.json())
   .then(res => (res.data))
-  // .then(res => (now = res.data))
-  // .then(console.log(res))
+  .then(res => (console.log(res)))
+  // .then(res => (res.aqi))
+  // .then(res => (res.aqi))
 
-console.log(apiHit.then(res => (res.data)))
+// console.log(apiHit.aqi)
 // console.log(now)
   //might not be necesesary anymore?
 // const valueLine = d3.line()
 //   .x((d) => (x(d.date)))
 //   .y((d) => (y(d[" pm25"])));
-const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv"
 
 
 
