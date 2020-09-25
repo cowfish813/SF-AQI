@@ -1,19 +1,26 @@
 // require('dotenv').config()
-const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv"
+const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
+const data = {};
 
-//api hit
 const apiHit = fetch('https://api.waqi.info/feed/beijing/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
-  .then(res => (res.data))
-  .then(res => (console.log(res)))
-  // .then(res => (res.aqi))
-  // .then(res => (res.aqi))
+  .then(res => (res.json()))
+  .then(res => {
+    if (res) {
+      for (let key in res) {
+        data[key] = res[key];
+      };
+    } else {
+      console.log("Broken res :(")
+    };
+  })
+  .catch(err => {
+    console.log(err)
+  });
 
-// console.log(apiHit.aqi)
-// console.log(now)
-  //might not be necesesary anymore?
-// const valueLine = d3.line()
-//   .x((d) => (x(d.date)))
-//   .y((d) => (y(d[" pm25"])));
+  console.log(data)
+
+  // document.getElementById("aqi_widget")
+
 
 
 
@@ -50,9 +57,10 @@ d3.csv(csvSF).then((data) => {
   }));
     //domain *sets input domain
   //extent calls min and max of the array
-
     //set x axis for month?
-        //find a way to key into month
+        //find a way to key into month?
+
+
   // x.domain(myData)
   y.domain([0, 240]); //use a Math.max(data.)something instead of 2nd arg
   
