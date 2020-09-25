@@ -2,7 +2,11 @@
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 const data = {};
 let status = "";
-const apiHit = fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
+
+//widget
+// "/san-francisco/san-francisco-arkansas-street" //can change city
+// token "9c249e12bd6b8b2edc5681e555d3f5454a6488b3" //how to hide this key without jquery/react?
+const widget = fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
   .then(res => (res.json()))
   .then(res => {
     if (res) {
@@ -29,6 +33,8 @@ const apiHit = fetch('https://api.waqi.info/feed/california/san-francisco/san-fr
         status = "Good"
         document.getElementById("aqi_widget").style.backgroundColor = "green";
       }
+      document.getElementById("aqi_widget").style.border = "1px black solid"
+      document.getElementById("title_conditions").innerHTML = "Conditions Today"
       document.getElementById("status").innerHTML = status;
       document.getElementById("aqi").innerHTML = data.data.aqi;
       document.getElementById("city").innerHTML = data.data.city.name;
@@ -37,15 +43,13 @@ const apiHit = fetch('https://api.waqi.info/feed/california/san-francisco/san-fr
     };
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
   });
 
-  console.log(data)
+console.log(data);
 
-  // document.getElementById("").innerHTML = 11;
-  // document.getElementById("").innerHTML = 11;
-
-
+//You could fetch the data then create the element then append it to the dom. So there won’t be a square at all until after it’s all resolved
+//test data -->
 
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
