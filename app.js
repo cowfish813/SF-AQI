@@ -30,15 +30,18 @@ const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco
           document.getElementById("aqi_widget").style.backgroundColor = "yellow";
         } else {
           status = "Good"
-          document.getElementById("aqi_widget").style.backgroundColor = "green";
+          document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
         }
-        //assembles widget without the jank
-        document.getElementById("aqi_widget").style.border = "1px black solid"
-        document.getElementById("title_conditions").innerHTML = "Conditions Today"
+        //assembles widget without jank or preloaded elements
+            //appends HTML elements to the DOM for efficient loading
+        document.getElementById("aqi_widget").style.border = "1px black solid";
+        document.getElementById("title_conditions").innerHTML = "Conditions Today";
         document.getElementById("status").innerHTML = status;
-        document.getElementById("aqi").innerHTML = data.data.aqi;
+        document.getElementById("aqi").innerHTML = aqi;
+        document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
       } else {
+        //hide that damed key
         console.log("out of calls!? maybe i should've hid the key :C");
       };
   })
@@ -46,13 +49,11 @@ const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco
     console.log(err);
   }));
 
+//makes the initial function call, setInterval re-calls function as a cb
 widget();
 setInterval(widget, 50000);
 
 console.log(data);
-
-//You could fetch the data then create the element then append it to the dom. So there won’t be a square at all until after it’s all resolved
-//test data -->
 
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},

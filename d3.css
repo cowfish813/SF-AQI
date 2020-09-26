@@ -112,14 +112,25 @@ body {
 	font-size: 1.5rem;
 }
 #aqi {
-	font-size: 4rem;
+	font-size: 4.5rem;
+}
+#sensor_site {
+	font-size: .7rem;
 }
 #city {
 	text-align: center;
 	/* font-size: .9rem; */
 }
+#sensor_site {
+	font-weight: bold;
+}
+#status {
+	font-size: 1.5rem;
+}
 
 
+
+/* legend colors */
 .good {
 	background-color: greenyellow;
 }
