@@ -17,7 +17,7 @@
 
 
     <!-- does this work? -->
-<script type="text/javascript" charset="utf-8">
+<!-- <script type="text/javascript" charset="utf-8">
     (function (w, d, t, f) {
         w[f] = w[f] || function (c, k, n) {
             s = w[f], k = s['k'] = (s['k'] || (k ? ('&k=' + k) : '')); s['c'] =
@@ -26,7 +26,7 @@
             e.parentNode.insertBefore(L, e);
         };
     })(window, document, 'script', '_aqiFeed');    
-</script>
+</script> -->
         <!--  -->
 
 
@@ -51,74 +51,83 @@
         <div class="midbody">
             <div id="my_dataviz"></div>
 
-            <div class="APIwidget" id="aqi_widget">
-                <!-- <h1>Conditions Today</h1> -->
-                <span id="title_conditions"></span>
-                <span id="status"></span>
-                <span id="aqi"></span>
-                <span id="city"></span>
-                <!-- how to use their code to make their widget?? -->
-                <!-- <span id="city-aqi-container"></span> -->
+            <div class="stats">
+                <div>
+                    <div class="APIwidget" id="aqi_widget">
+                        <span id="title_conditions"></span>
+                        <span id="status"></span>
+                        <span id="aqi"></span>
+                        <span id="city"></span>
+                    </div>
+                    <!-- add one of those mask guys i guess? -->
+                </div>
+
+                <div class=forecast>
+                    <!-- future content -->
+                </div>
             </div>
-    
+    <!-- aqi -->
+    <!-- air pollution level -->
+    <!-- health implications -->
+    <!-- cautionary statement (for PM2.5) -->
             <div class="legend">
-                <div class="indicontainer good">
-                    <div class="icondicator">
-                        <p>Good</p>
-                        <img class="indicator" src="./assets/aqi/1.png" alt="">
-                        <p>0-50</p>
+                <div class="container good">
+                    <div class="indicator">
+                        <p class="lstatus">Good</p>
+                        <img class="icon" src="./assets/aqi/1.png" >
                     </div>
-                    <p>Air quality is considered satisfactory, and air pollution poses little or no risk</p>
-                    <p>none</p>
+                    <p class="lnums" id="lnum">0 - 50</p>
+                    <p class="imp">Air quality is considered satisfactory, and air pollution poses little or no risk</p>
+                    <p class="statement">none</p>
                 </div>
-                <div class="indicontainer moderate">
-                    <div class="icondicator">
-                        <p>Moderate</p>
-                        <img class="indicator" src="./assets/aqi/2.png" alt="">
-                        <p>51-100</p>
+                <div class="container moderate">
+                    <div class="indicator">
+                        <p class="lstatus">Moderate</p>
+                        <img class="icon" src="./assets/aqi/2.png" >
                     </div>
-                    <p>Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number
+                    <p class="lnums" id="lnum">51 - 100</p>
+                    <p class="imp">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number
                     of people who are unusually sensitive to air pollution.</p>
-                    <p>Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
+                    <p class="statement">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
                     exertion.</p>
                 </div>
-                <div class="indicontainer usg">
-                    <div class="icondicator">
-                        <p>Unhealthy for Sensitive Groups</p>
-                        <img class="indicator" src="./assets/aqi/3.png" alt="">
-                        <p>101-150</p>
+                <div class="container usg">
+                    <div class="indicator">
+                        <p class="lstatus">Unhealthy for Sensitive Groups</p>
+                        <img class="icon" src="./assets/aqi/3.png" >
                     </div>
-                    <p>Members of sensitive groups may experience health effects. The general public is not likely to be affected.</p>
-                    <p>Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
+                    <p class="lnums" id="lnum">101 - 150</p>
+                    <p class="imp">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</p>
+                    <p class="statement">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor
                     exertion.</p>
                 </div>
-                <div class="indicontainer uh">
-                    <div class="icondicator">
-                        <p>Unhealthy</p>
-                        <img class="indicator" src="./assets/aqi/4.png" alt="">
-                        <p>151-200</p>
+                <div class="container uh">
+                    <div class="indicator">
+                        <p class="lstatus">Unhealthy</p>
+                        <img class="icon" src="./assets/aqi/4.png" >
                     </div>
-                    <p>Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects</p>
-                    <p>Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor
+                    <p class="lnums" id="lnum">151 - 200</p>
+                    <p class="imp">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects</p>
+                    <p class="statement">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor
                     exertion; everyone else, especially children, should limit prolonged outdoor exertion</p>
                 </div>
-                <div class="indicontainer vuh">
-                    <div class="icondicator">
-                        <p>Very Unhealthy</p>
-                        <img class="indicator" src="./assets/aqi/5.png" alt="">
-                        <p>201-300</p>
+                <div class="container vuh">
+                    <div class="indicator">
+                        <p class="lstatus">Very Unhealthy</p>
+                        <img class="icon" src="./assets/aqi/5.png" >
                     </div>
-                    <p>Health warnings of emergency conditions. The entire population is more likely to be affected.</p>
-                    <p>Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion. </p>
+                    <p class="lnums" id="lnum">201 - 300</p>
+                    <p class="imp">Health warnings of emergency conditions. The entire population is more likely to be affected.</p>
+                    <p class="statement">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion. </p>
                 </div>
-                <div class="indicontainer haz">
-                    <div  class="icondicator">
-                        <p>Hazardius</p>
-                        <img class="indicator" src="./assets/aqi/6.png" alt="">
-                        <p>301+</p>
+                <div class="container haz">
+                    <div class="indicator">
+                        <p class="lstatus">Hazardous</p>
+                        <img class="icon" src="./assets/aqi/6.png" >
                     </div>
-                    <p>Health alert: everyone may experience more serious health effects</p>
-                    <p>Everyone should avoid all outdoor exertion</p>
+                    <p class="lnums" id="lnum">301+</p>
+                    <p class="imp">Health alert: everyone may experience more serious health effects</p>
+                    <p class="statement">Everyone should avoid all outdoor exertion</p>
                 </div>
             </div>
     

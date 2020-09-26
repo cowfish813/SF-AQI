@@ -2,7 +2,6 @@
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 const data = {};
 
-//widget
 // "/san-francisco/san-francisco-arkansas-street" //can change city
 // token "9c249e12bd6b8b2edc5681e555d3f5454a6488b3" //how to hide this key without jquery/react?
 const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=9c249e12bd6b8b2edc5681e555d3f5454a6488b3')
