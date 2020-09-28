@@ -1,6 +1,7 @@
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 const data = {};
+const token = "";
 
 // "/san-francisco/san-francisco-arkansas-street" //can change city
 // token "9c249e12bd6b8b2edc5681e555d3f5454a6488b3" //how to hide this key without jquery/react?
@@ -29,7 +30,7 @@ const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco
           status = "Moderate";
           document.getElementById("aqi_widget").style.backgroundColor = "yellow";
         } else {
-          status = "Good"
+          status = "Good";
           document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
         }
         //assembles widget without jank or preloaded elements
@@ -42,7 +43,7 @@ const widget = () => (fetch('https://api.waqi.info/feed/california/san-francisco
         document.getElementById("city").innerHTML = data.data.city.name;
       } else {
         //hide that damed key
-        console.log("out of calls!? maybe i should've hid the key :C");
+        console.log("API limit exhausted");
       };
   })
   .catch(err => {
