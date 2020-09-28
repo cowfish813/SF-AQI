@@ -13,7 +13,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       };
       const aqi = data.data.aqi;
       let status = "";
-        if (aqi > 300) {
+      if (aqi > 300) {
           status = "Hazardous";
           document.getElementById("aqi_widget").style.backgroundColor ="brown";
         } else if (aqi > 200) {
@@ -40,10 +40,10 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("aqi").innerHTML = aqi;
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
-      } else {
-        //hide that damed key
-        console.log("API limit exhausted");
-      };
+    } else {
+      //hide that damed key
+      console.log("API limit exhausted");
+    };
   })
   .catch(err => {
     console.log(err);
@@ -69,8 +69,6 @@ const svg = d3.select('#my_dataviz')
 
 //manipulate year/month/etc
 const parseTime = d3.timeParse("%Y/%m/%d");
-
-
 
 const x = d3.scaleTime().range([0, width]);
   // .domain(d3.extent(data, (d) => { return d.date; })) //no data yet, append later?

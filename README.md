@@ -37,20 +37,18 @@ const widget = () => (fetch(`fetch(`https://api.waqi.info/feed/${location}/?toke
           status = "Moderate";
           document.getElementById("aqi_widget").style.backgroundColor = "yellow";
         } else {
-          status = "Good";
-          document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
+            status = "Good";
+            document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
         }
-        //assembles widget without jank or preloaded elements
-            //appends HTML elements to the DOM for efficient loading
         document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
         document.getElementById("status").innerHTML = status;
         document.getElementById("aqi").innerHTML = aqi;
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
-      } else {
-        console.log("API limit exhausted");
-      };
+    } else {
+      console.log("API limit exhausted");
+    };
   })
   .catch(err => {
     console.log(err);
