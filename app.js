@@ -1,11 +1,10 @@
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
+let sensorSite = "california/san-francisco/san-francisco-arkansas-street";
 const data = {};
-const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3";
 
-// "/san-francisco/san-francisco-arkansas-street" //can change city
-// token "9c249e12bd6b8b2edc5681e555d3f5454a6488b3" //how to hide this key without jquery/react?
-const widget = () => (fetch(`https://api.waqi.info/feed/california/san-francisco/san-francisco-arkansas-street/?token=${token}`)
+const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
+const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
     if (res) {
@@ -49,12 +48,11 @@ const widget = () => (fetch(`https://api.waqi.info/feed/california/san-francisco
   .catch(err => {
     console.log(err);
   }));
-
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
 setInterval(widget, 50000);
-
 console.log(data);
+
 
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
@@ -68,8 +66,10 @@ const svg = d3.select('#my_dataviz')
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//kinda useless atm, might be handy for modular code
-// const parseTime = d3.timeParse("%Y/%m/%d");
+
+//manipulate year/month/etc
+const parseTime = d3.timeParse("%Y/%m/%d");
+
 
 
 const x = d3.scaleTime().range([0, width]);
@@ -80,7 +80,7 @@ const y = d3.scaleLinear().range([height, 0]);
   
 d3.csv(csvSF).then((data) => {
   data.forEach(d => {
-    d.date = d3.timeParse("%Y/%m/%d")(d.date);
+    d.date = parseTime(d.date);
     d.pm25 = d[" pm25"];
   });
 
@@ -88,6 +88,8 @@ d3.csv(csvSF).then((data) => {
     // console.log(d)
     return d.date;
   }));
+  // x.domain(data.map((d) => d.date))
+  console.log()
     //domain *sets input domain
   //extent calls min and max of the array
     //set x axis for month?

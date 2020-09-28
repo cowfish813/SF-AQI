@@ -134,21 +134,27 @@ body {
 /* legend colors */
 .good {
 	background-color: greenyellow;
+	transition: 2s;
 }
 .moderate {
 	background-color: yellow;
+	transition: 2s;
 }
 .usg {
 	background-color: orange;
+	transition: 2s;
 }
 .uh {
 	background-color: red;
+	transition: 2s;
 }
 .vuh {
 	background-color: purple;
+	transition: 2s;
 }
 .haz {
 	background-color: brown;
+	transition: 2s;
 }
 
 /* pHover:hover {
