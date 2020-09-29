@@ -97,31 +97,17 @@ d3.csv(test)
   const colors = d3.scaleOrdinal()
   .domain(years)
   .range(d3.schemeSet2);
-
-  const dat = years.map(year => ({
-    name: year,
-    values: data.map( d => {
-      // console.log(year)
-      // console.log(d[" pm25"])
-      return ({
-        year: year,
-        value: d[" pm25"]
-    })})
-  }));
   
-  svg.selectAll("dots")
-  .data(dat)
-  .enter()
-        .append("g")
-        .style("fill", d => (colors(d.pm25)))
-        .selectAll("myPoints")
-        .data( d => (d.pm25) )
-        .enter()
-        .append("circle")
+  svg.append("g")
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
         .attr("r", 2)
         .attr("cx", d => (x(d.date)))
         .attr("cy", d => (y(d.pm25)))
-        .attr("fill", "#69b3a2"); //color
+        .style("fill", d => (colors(d.year)))
+      
 // 
 
     // const dots = svg.selectAll("dot")
