@@ -31,7 +31,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         } else {
           status = "Good";
           document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
-        }
+        };
         //assembles widget without jank or preloaded elements
             //appends HTML elements to the DOM for efficient loading
         document.getElementById("aqi_widget").style.border = "1px black solid";
@@ -68,67 +68,85 @@ const svg = d3.select('#my_dataviz')
 
 
 //manipulate year/month/etc
-const parseTime = d3.timeParse("%Y/%m/%d");
-
-const x = d3.scaleTime().range([0, width]);
-  // .domain(d3.extent(data, (d) => { return d.date; })) //no data yet, append later?
+const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
+function year () {
   
+}
+const parseTime = d3.timeParse(`${year}/%m/%d`);
+
 const y = d3.scaleLinear().range([height, 0]);
-  // .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
-  
-d3.csv(csvSF).then((data) => {
-  data.forEach(d => {
-    d.date = parseTime(d.date);
-    d.pm25 = d[" pm25"];
-  });
+const x = d3.scaleTime().range([0, width]);
+// let scales = {}
+// const formatYear = d3.timeFormat("%Y")
 
-  x.domain(d3.extent(data, (d) => { 
-    // console.log(d)
-    return d.date;
-  }));
-  // x.domain(data.map((d) => d.date))
-  console.log()
-    //domain *sets input domain
-  //extent calls min and max of the array
-    //set x axis for month?
-        //find a way to key into month?
+// .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
+
+const date_format = d3.timeFormat("%Y/%m/%d");
+
+d3.csv(csvSF)
+  .then((data) => {
+    data.forEach(d => {
+      // console.log(d.date)
+
+      d.date = parseTime(d.date);
+      d.pm25 = d[" pm25"];
+    });
+
+    x.domain(d3.extent(data, (d) => { 
+      // console.log(d.date)
+      return d.date;
+    }));
+
+    // x.domain([new Date(2018, 0, 1), new Date(2019, 0, 11)])
+
+    // years.forEach(d =>)
+
+    
+    // x.domain(data.map((d) => d.date))
+    // console.log()
+      //domain *sets input domain
+    //extent calls min and max of the array
+      //set x axis for month?
+          //find a way to key into month?
+
+    // x.domain(myData)
+    y.domain([0, 240]); 
+    //use a Math.max(data.)+ some num to round it something instead of 2nd arg
+    
+    svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      // .tickFormat(d3.timeFormat("%b"))
+
+    svg.append("g")
+    .call(d3.axisLeft(y))
+    
+
+    const dots = svg.selectAll("dot")
+      .data(data)
+      .enter().append("circle")
+        .attr("r", 5)
+        .attr("cx", d => (x(d.date)))
+        .attr("cy", d => (y(d.pm25)))
+        .attr("fill", "#69b3a2") //color
 
 
-  // x.domain(myData)
-  y.domain([0, 240]); //use a Math.max(data.)something instead of 2nd arg
-  
-  svg.append("g")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x));
-  
-  svg.append("g")
-  .call(d3.axisLeft(y))
-  
 
-  svg.selectAll("dot")
-    .data(data)
-    .enter().append("circle")
-      .attr("r", 5)
-      .attr("cx", d => (x(d.date)))
-      .attr("cy", d => (y(d.pm25)))
-      .attr("fill", "#69b3a2") //color
-
-
-
-  // Add the line
-        //later on, set for hover on dots
-  const pHover = svg
-    .data([data])
-    // same thing?
-  // .datum(data)
-    .append("path")
-    .attr("fill", "none")
-    .attr("d", d3.line()
-      .x((d) => { return x(d.date) })
-      .y((d) => { return y(d.pm25) })
-    )
-    .attr("stroke", "#69b3a2")
-    .attr("stroke-width", 1.5)
+    // Add the line
+          //later on, set for hover on dots
+    const pHover = svg
+      .data([data])
+      // same thing?
+    // .datum(data)
+      .append("path")
+      .attr("fill", "none")
+      .attr("d", d3.line()
+        .x((d) => { return x(d.date) })
+        .y((d) => { return y(d.pm25) })
+      )
+      .attr("stroke", "#69b3a2")
+      .attr("stroke-width", 1)
+    })
     // .on("mouseover", function (d) {
     //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
     //     .attr('fill-opacity', 0.3);
@@ -137,31 +155,25 @@ d3.csv(csvSF).then((data) => {
     //   d3.select(this).style("fill", "none")
     //     .attr('fill-opacity', 1);
     // });
+    
+
+      // Add the points
+    // svg
+    //   .append("g")
+    //   .selectAll("dot")
+    //   .data(data)
+    //   .enter()
+    //   .append("circle")
+    //   .attr("cx", (d) => { return x(d.date) })
+    //   .attr("cy", (d) => { return y(d.pm25) })
+    //   .attr("r", 5)
+    //   .attr("fill", "#69b3a2")
 
 
-
-    //add point
-        //later on => color the dots based on severity
-});
-
-
-    // Add the points
-  // svg
-  //   .append("g")
-  //   .selectAll("dot")
-  //   .data(data)
-  //   .enter()
-  //   .append("circle")
-  //   .attr("cx", (d) => { return x(d.date) })
-  //   .attr("cy", (d) => { return y(d.pm25) })
-  //   .attr("r", 5)
-  //   .attr("fill", "#69b3a2")
-
-
-  // Add the valueline path.
-  // svg.append("path")
-  //   .data([data])
-  //   .attr("class", "line")
-  //   .attr("d", valueLine)
-    // .attr("fill", "#69b3a2") //color
-  // Add the valueline path.
+    // Add the valueline path.
+    // svg.append("path")
+    //   .data([data])
+    //   .attr("class", "line")
+    //   .attr("d", valueLine)
+      // .attr("fill", "#69b3a2") //color
+    // Add the valueline path.

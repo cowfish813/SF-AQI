@@ -55,7 +55,7 @@ const widget = () => (fetch(`fetch(`https://api.waqi.info/feed/${location}/?toke
   }));
 ```
 
-"fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I constructed the functional widget entirely with CSS and promises for smoother load times. The application is able to call this function every 5 minutes and update without having to reload the entire widget.
+"fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I constructed the functional widget entirely with CSS and promises for smoother load times. The application is able to call this function every 5 minutes and update without having to reload the widget or entire webpage.
 
 
 
