@@ -53,8 +53,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
 widget();
 setInterval(widget, 50000);
 
-
-
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1080 - margin.left - margin.right
   height = 400 - margin.top - margin.bottom
@@ -65,64 +63,74 @@ const svg = d3.select('#my_dataviz')
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-//manipulate year/month/etc
-const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
-function year () {
-  
-}
+      
+      
 const parseTime = d3.timeParse(`%m/%d`);
-
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
-// let scales = {}
-// const formatYear = d3.timeFormat("%Y")
-
-// .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
+const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
 d3.csv(test)
-  .then((data) => {
-    data.forEach(d => {
-      d.date = parseTime(d.date);
-      d.pm25 = d[" pm25"];
-      d.year = d[" year"];
-    });
+.then((data) => {
+  data.forEach(d => {
+    d.date = parseTime(d.date);
+    d.pm25 = d[" pm25"];
+    d.year = d[" year"];
+  });
+  
+  
+  x.domain(d3.extent(data, (d) => { 
+    return d.date;
+  }));
+  
+  y.domain([0, 240]); 
+  //use a Math.max(data.)+ some num to round it something instead of 2nd arg
+  
+  svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); //tickformat debugs calendar
+  
+  svg.append("g")
+  .call(d3.axisLeft(y));
+  
+  // 
+  const colors = d3.scaleOrdinal()
+  .domain(years)
+  .range(d3.schemeSet2);
 
-    x.domain(d3.extent(data, (d) => { 
-      return d.date;
-    }));
-
-    // x.domain([new Date(2018, 0, 1), new Date(2019, 0, 11)])
-
-    // years.forEach(d =>)
-
-    
-    // x.domain(data.map((d) => d.date))
-      //domain *sets input domain
-    //extent calls min and max of the array
-      //set x axis for month?
-          //find a way to key into month?
-
-    // x.domain(myData)
-    y.domain([0, 240]); 
-    //use a Math.max(data.)+ some num to round it something instead of 2nd arg
-    
-    svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b")))
-
-    svg.append("g")
-    .call(d3.axisLeft(y))
-    
-
-    const dots = svg.selectAll("dot")
-      .data(data)
-      .enter().append("circle")
-        .attr("r", 5)
+  const dat = years.map(year => ({
+    name: year,
+    values: data.map( d => {
+      // console.log(year)
+      // console.log(d[" pm25"])
+      return ({
+        year: year,
+        value: d[" pm25"]
+    })})
+  }));
+  
+  svg.selectAll("dots")
+  .data(dat)
+  .enter()
+        .append("g")
+        .style("fill", d => (colors(d.pm25)))
+        .selectAll("myPoints")
+        .data( d => (d.pm25) )
+        .enter()
+        .append("circle")
+        .attr("r", 2)
         .attr("cx", d => (x(d.date)))
         .attr("cy", d => (y(d.pm25)))
-        .attr("fill", "#69b3a2") //color
+        .attr("fill", "#69b3a2"); //color
+// 
+
+    // const dots = svg.selectAll("dot")
+    //   .data(data)
+    //   .enter().append("circle")
+    //     .attr("r", 2)
+    //     .attr("cx", d => (x(d.date)))
+    //     .attr("cy", d => (y(d.pm25)))
+    //     .attr("fill", "#69b3a2"); //color
 
 
 
@@ -139,8 +147,11 @@ d3.csv(test)
     //     .y((d) => { return y(d.pm25) })
     //   )
     //   .attr("stroke", "#69b3a2")
-    //   .attr("stroke-width", 1)
+    //   .attr("stroke-width", .5)
     })
+
+
+
     // .on("mouseover", function (d) {
     //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
     //     .attr('fill-opacity', 0.3);

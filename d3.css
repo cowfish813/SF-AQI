@@ -157,6 +157,10 @@ body {
 	transition: 2s;
 }
 
+.cont_legend {
+	background-color: white;
+}
+
 /* pHover:hover {
 	stroke: #69b3a2;
 	stroke-width: 1.5;
