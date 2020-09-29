@@ -2,8 +2,9 @@
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street";
 const data = {};
-
+const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv"
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
+
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
@@ -51,7 +52,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
 setInterval(widget, 50000);
-console.log(data);
 
 
 
@@ -72,7 +72,7 @@ const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 function year () {
   
 }
-const parseTime = d3.timeParse(`${year}/%m/%d`);
+const parseTime = d3.timeParse(`%m/%d`);
 
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
@@ -81,19 +81,15 @@ const x = d3.scaleTime().range([0, width]);
 
 // .domain([0, 240]) //use a Math.max(data.)something instead of 2nd arg
 
-const date_format = d3.timeFormat("%Y/%m/%d");
-
-d3.csv(csvSF)
+d3.csv(test)
   .then((data) => {
     data.forEach(d => {
-      // console.log(d.date)
-
       d.date = parseTime(d.date);
       d.pm25 = d[" pm25"];
+      d.year = d[" year"];
     });
 
     x.domain(d3.extent(data, (d) => { 
-      // console.log(d.date)
       return d.date;
     }));
 
@@ -103,7 +99,6 @@ d3.csv(csvSF)
 
     
     // x.domain(data.map((d) => d.date))
-    // console.log()
       //domain *sets input domain
     //extent calls min and max of the array
       //set x axis for month?
@@ -115,8 +110,7 @@ d3.csv(csvSF)
     
     svg.append("g")
     .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      // .tickFormat(d3.timeFormat("%b"))
+      .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b")))
 
     svg.append("g")
     .call(d3.axisLeft(y))
@@ -134,18 +128,18 @@ d3.csv(csvSF)
 
     // Add the line
           //later on, set for hover on dots
-    const pHover = svg
-      .data([data])
-      // same thing?
-    // .datum(data)
-      .append("path")
-      .attr("fill", "none")
-      .attr("d", d3.line()
-        .x((d) => { return x(d.date) })
-        .y((d) => { return y(d.pm25) })
-      )
-      .attr("stroke", "#69b3a2")
-      .attr("stroke-width", 1)
+    // const pHover = svg
+    //   .data([data])
+    //   // same thing?
+    // // .datum(data)
+    //   .append("path")
+    //   .attr("fill", "none")
+    //   .attr("d", d3.line()
+    //     .x((d) => { return x(d.date) })
+    //     .y((d) => { return y(d.pm25) })
+    //   )
+    //   .attr("stroke", "#69b3a2")
+    //   .attr("stroke-width", 1)
     })
     // .on("mouseover", function (d) {
     //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
