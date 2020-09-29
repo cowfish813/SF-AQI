@@ -62,11 +62,8 @@ body {
 .legend {
 	display: flex;
 	flex-wrap: wrap;
-	/* border: solid white 1px; */
 	margin-bottom: 2rem;
-
 	width: 60rem;
-
 }
 
 .container {

@@ -71,11 +71,11 @@ const x = d3.scaleTime().range([0, width]);
 const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
 d3.csv(test)
-.then((data) => {
-  data.forEach(d => {
-    d.date = parseTime(d.date);
-    d.pm25 = d[" pm25"];
-    d.year = d[" year"];
+  .then((data) => {
+    data.forEach(d => {
+      d.date = parseTime(d.date);
+      d.pm25 = d[" pm25"];
+      d.year = d[" year"];
   });
   
   
@@ -86,19 +86,18 @@ d3.csv(test)
   y.domain([0, 240]); 
   //use a Math.max(data.)+ some num to round it something instead of 2nd arg
   
-  svg.append("g")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); //tickformat debugs calendar
+  const xaxis = svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); //tickformat debugs calendar
   
-  svg.append("g")
+  const yaxis = svg.append("g")
   .call(d3.axisLeft(y));
   
-  // 
   const colors = d3.scaleOrdinal()
-  .domain(years)
-  .range(d3.schemeSet2);
+    .domain(years)
+    .range(d3.schemeSet2);
   
-  svg.append("g")
+  const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
     .enter()
@@ -108,21 +107,26 @@ d3.csv(test)
         .attr("cy", d => (y(d.pm25)))
         .style("fill", d => (colors(d.year)))
       
-// 
+  const sumdat = d3.nest()
+    .key( d => (
+      d.year
+    ))
+    .entries(data)
 
-    // const dots = svg.selectAll("dot")
-    //   .data(data)
-    //   .enter().append("circle")
-    //     .attr("r", 2)
-    //     .attr("cx", d => (x(d.date)))
-    //     .attr("cy", d => (y(d.pm25)))
-    //     .attr("fill", "#69b3a2"); //color
+  const lines = svg.selectAll(".line")
+      .data(sumdat)
+      .enter()
+      .append("path")
+        .attr("fill", "none")
+        .attr("stroke", d => (colors(d.key)))
+        .attr("stroke-width", .3)
+        .attr("d", d => {
+          return d3.line()
+            .x(d => d.year)
+            // .y(d => )
+        })
 
-
-
-    // Add the line
-          //later on, set for hover on dots
-    // const pHover = svg
+  // const pHover = svg
     //   .data([data])
     //   // same thing?
     // // .datum(data)
@@ -132,8 +136,9 @@ d3.csv(test)
     //     .x((d) => { return x(d.date) })
     //     .y((d) => { return y(d.pm25) })
     //   )
-    //   .attr("stroke", "#69b3a2")
-    //   .attr("stroke-width", .5)
+    //   .attr("stroke", "black")
+    //   .attr("stroke-width", .3)
+    //   .on("mouseover")
     })
 
 
