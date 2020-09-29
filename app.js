@@ -68,7 +68,7 @@ const svg = d3.select('#my_dataviz')
 const parseTime = d3.timeParse(`%m/%d`);
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
-const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
+// const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
 
 d3.csv(test)
   .then((data) => {
@@ -88,15 +88,23 @@ d3.csv(test)
   
   const xaxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); //tickformat debugs calendar
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); 
+    //tickformat debugs calendar
   
   const yaxis = svg.append("g")
   .call(d3.axisLeft(y));
+  const sumdat = d3.nest()
+    .key( d => {
+      return d.year
+    })
+    .entries(data);
+
+  const years = sumdat.map( d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
     .domain(years)
     .range(d3.schemeSet2);
-  
+    
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -105,25 +113,21 @@ d3.csv(test)
         .attr("r", 2)
         .attr("cx", d => (x(d.date)))
         .attr("cy", d => (y(d.pm25)))
-        .style("fill", d => (colors(d.year)))
-      
-  const sumdat = d3.nest()
-    .key( d => (
-      d.year
-    ))
-    .entries(data)
+        .style("fill", d => (colors(d.year)));
 
   const lines = svg.selectAll(".line")
       .data(sumdat)
       .enter()
       .append("path")
         .attr("fill", "none")
-        .attr("stroke", d => (colors(d.key)))
+        .attr("stroke", d => (colors(years)))
         .attr("stroke-width", .3)
         .attr("d", d => {
+          // console.log(d)
           return d3.line()
             .x(d => d.year)
-            // .y(d => )
+            .y(d => d.pm25)
+            (d.values)
         })
 
   // const pHover = svg
@@ -139,7 +143,7 @@ d3.csv(test)
     //   .attr("stroke", "black")
     //   .attr("stroke-width", .3)
     //   .on("mouseover")
-    })
+    });
 
 
 
