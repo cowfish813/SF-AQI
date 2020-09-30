@@ -12,7 +12,7 @@ These events are not normal and I wanted to visualize it over the years as well 
 
 The functional components involved with making the live update are utilized as follows
 ```
-const widget = () => (fetch(`fetch(`https://api.waqi.info/feed/${location}/?token=${token}`)
+const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
     if (res) {
@@ -21,25 +21,29 @@ const widget = () => (fetch(`fetch(`https://api.waqi.info/feed/${location}/?toke
       };
       const aqi = data.data.aqi;
       let status = "";
-        if (aqi > 300) {
+      let color = "";
+      if (aqi > 300) {
           status = "Hazardous";
-          document.getElementById("aqi_widget").style.backgroundColor ="brown";
+          color ="brown";
         } else if (aqi > 200) {
           status = "Very Unhealthy";
-          document.getElementById("aqi_widget").style.backgroundColor ="puple";
+          color ="puple";
         } else if (aqi > 151) {
           status = "Unhealthy";
-          document.getElementById("aqi_widget").style.backgroundColor = "red";
+          color = "red";
         } else if (aqi > 150) {
           status = "Unhealthy for Sensitive Groups";
-          document.getElementById("aqi_widget").style.backgroundColor = "orange";
+          color = "orange";
         } else if (aqi > 50) {
           status = "Moderate";
-          document.getElementById("aqi_widget").style.backgroundColor = "yellow";
+          color = "yellow";
         } else {
-            status = "Good";
-            document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
-        }
+          status = "Good";
+          color = "greenyellow";
+        };
+        //assembles widget without jank or preloaded elements
+            //appends HTML elements to the DOM for efficient loading
+        document.getElementById("aqi_widget").style.backgroundColor = color;
         document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
         document.getElementById("status").innerHTML = status;
@@ -47,6 +51,7 @@ const widget = () => (fetch(`fetch(`https://api.waqi.info/feed/${location}/?toke
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
     } else {
+      //hide that damed key
       console.log("API limit exhausted");
     };
   })

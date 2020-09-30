@@ -24,8 +24,8 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         } else if (aqi > 151) {
           status = "Unhealthy";
           color = "red";
-        } else if (aqi > 150) {
-          status = "Unhealthy for Sensitive Groups";
+        } else if (aqi > 100) {
+          status = "USG";
           color = "orange";
         } else if (aqi > 50) {
           status = "Moderate";
@@ -119,19 +119,21 @@ d3.csv(test)
         .attr("cy", d => (y(d.pm25)))
         .style("fill", d => (colors(d.year)));
 
-  const lines = d3.line()
-    .x(d => x(d.date))
-    .y(d => y(d.pm25))
-  svg.selectAll("lines")
-    .data([data])
-    .enter()
-    .append("path")
-      .attr("d", d => {
-        // console.log(d)
-        return lines(d.key)})
-      .attr("stroke", d => colors(d.key))
-      .style("stroke-width", 5)
-      .style("fill", "none")
+
+        // 
+  // const lines = d3.line()
+  //   .x(d => x(d.date))
+  //   .y(d => y(d.pm25))
+  // svg.selectAll("lines")
+  //   .data([data])
+  //   .enter()
+  //   .append("path")
+  //     .attr("d", d => {
+  //       // console.log(d)
+  //       return lines(d.key)})
+  //     .attr("stroke", d => colors(d.key))
+  //     .style("stroke-width", 5)
+  //     .style("fill", "none")
 
 
 
@@ -151,25 +153,44 @@ d3.csv(test)
   //           (d.values)
   //       })
 
-  // const pHover = svg
-    //   .data([data])
-    //   // same thing?
-    // // .datum(data)
-    //   .append("path")
-    //   .attr("fill", "none")
-    //   .attr("d", d3.line()
-    //     .x((d) => { return x(d.date) })
-    //     .y((d) => { return y(d.pm25) })
-    //   )
-    //   .attr("stroke", "black")
-    //   .attr("stroke-width", .3)
+  const pHover = svg
+      .data([data])
+      // same thing?
+    // .datum(data)
+      .append("path")
+      .attr("fill", "none")
+      .attr("d", d3.line()
+        .x((d) => { return x(d.date) })
+        .y((d) => { return y(d.pm25) })
+      )
+      .attr("stroke", "black")
+      .attr("stroke-width", .3)
     //   .on("mouseover")
 
 
     //line legend
     svg
       .selectAll("labels")
-      
+      .data(sumdat)
+      .enter()
+        .append("g")
+        .append("text")
+          .datum(d => {
+            // console.log(d.values.sort((a, b) => {
+            //   debugger
+            //   a.date - b.date
+            // }))
+            // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
+            return ({
+            year: d.key,
+            value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1],
+            // last: 
+          })})
+          .attr("transform", d => { return ("translate(" + x(d.value.date) + "," + y(d.year) + ")")})
+          .attr("x", 12)
+          .text(d => { return (d.year)})
+          .style("fill", d => {return (colors(d.year))})
+          .style("font-size", 15)
     });
 
 
