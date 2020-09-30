@@ -14,27 +14,29 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       };
       const aqi = data.data.aqi;
       let status = "";
+      let color = ""
       if (aqi > 300) {
           status = "Hazardous";
-          document.getElementById("aqi_widget").style.backgroundColor ="brown";
+          color ="brown";
         } else if (aqi > 200) {
           status = "Very Unhealthy";
-          document.getElementById("aqi_widget").style.backgroundColor ="puple";
+          color ="puple";
         } else if (aqi > 151) {
           status = "Unhealthy";
-          document.getElementById("aqi_widget").style.backgroundColor = "red";
+          color = "red";
         } else if (aqi > 150) {
           status = "Unhealthy for Sensitive Groups";
-          document.getElementById("aqi_widget").style.backgroundColor = "orange";
+          color = "orange";
         } else if (aqi > 50) {
           status = "Moderate";
-          document.getElementById("aqi_widget").style.backgroundColor = "yellow";
+          color = "yellow";
         } else {
           status = "Good";
-          document.getElementById("aqi_widget").style.backgroundColor = "greenyellow";
+          color = "greenyellow";
         };
         //assembles widget without jank or preloaded elements
             //appends HTML elements to the DOM for efficient loading
+        document.getElementById("aqi_widget").style.backgroundColor = color;
         document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
         document.getElementById("status").innerHTML = status;
@@ -68,7 +70,8 @@ const svg = d3.select('#my_dataviz')
 const parseTime = d3.timeParse(`%m/%d`);
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
-// const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020];
+// const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; 
+    //probably not necessary anymore
 
 d3.csv(test)
   .then((data) => {
@@ -93,13 +96,14 @@ d3.csv(test)
   
   const yaxis = svg.append("g")
   .call(d3.axisLeft(y));
+
   const sumdat = d3.nest()
     .key( d => {
+      // console.log(d)
       return d.year
     })
     .entries(data);
-
-  const years = sumdat.map( d => d.key); //array of years
+  const years = sumdat.map(d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
     .domain(years)
@@ -115,20 +119,37 @@ d3.csv(test)
         .attr("cy", d => (y(d.pm25)))
         .style("fill", d => (colors(d.year)));
 
-  const lines = svg.selectAll(".line")
-      .data(sumdat)
-      .enter()
-      .append("path")
-        .attr("fill", "none")
-        .attr("stroke", d => (colors(years)))
-        .attr("stroke-width", .3)
-        .attr("d", d => {
-          // console.log(d)
-          return d3.line()
-            .x(d => d.year)
-            .y(d => d.pm25)
-            (d.values)
-        })
+  const lines = d3.line()
+    .x(d => x(d.date))
+    .y(d => y(d.pm25))
+  svg.selectAll("lines")
+    .data([data])
+    .enter()
+    .append("path")
+      .attr("d", d => {
+        // console.log(d)
+        return lines(d.key)})
+      .attr("stroke", d => colors(d.key))
+      .style("stroke-width", 5)
+      .style("fill", "none")
+
+
+
+        // 
+  // const lines = svg.selectAll(".line")
+  //     .data(sumdat)
+  //     .enter()
+  //     .append("path")
+  //       .attr("fill", "none")
+  //       .attr("stroke", d => (colors(years)))
+  //       .attr("stroke-width", .3)
+  //       .attr("d", d => {
+  //         console.log(d)
+  //         return d3.line()
+  //           .x(d => d.year)
+  //           .y(d => d.pm25)
+  //           (d.values)
+  //       })
 
   // const pHover = svg
     //   .data([data])
@@ -143,6 +164,12 @@ d3.csv(test)
     //   .attr("stroke", "black")
     //   .attr("stroke-width", .3)
     //   .on("mouseover")
+
+
+    //line legend
+    svg
+      .selectAll("labels")
+      
     });
 
 
