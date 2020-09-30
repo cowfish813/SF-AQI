@@ -14,7 +14,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       };
       const aqi = data.data.aqi;
       let status = "";
-      let color = ""
+      let color = "";
       if (aqi > 300) {
           status = "Hazardous";
           color ="brown";

@@ -1,14 +1,15 @@
 body {
 	background-color:grey;
-
+	background-image: url("./assets/884849.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	/* width: 1140px; */
-	/* margin: 0 auto; */
 	font-size: 1rem;
-	/* line-height: 115%; */
 }
 
 .navbar {
@@ -29,7 +30,6 @@ body {
 .right {
 	display: flex;
 	flex-direction: row;
-	/* align-items: flex-end; */
 	justify-content: flex-end;
 }
 
@@ -49,7 +49,6 @@ body {
 }
 
 .APIwidget{
-	/* border: 1px black solid; */
 	width: 15rem;
 	height: 15rem;
 	border-radius: 1rem;
@@ -68,11 +67,9 @@ body {
 
 .container {
 	display: flex;
-	/* flex-wrap: wrap; */
 	justify-content: space-between;
 	border: solid white 1px;
 	padding: 1rem;
-	/* position: absolute; */
 	width: inherit;
 }
 
@@ -93,7 +90,6 @@ body {
 	display: flex;
 	align-items: center;
 	margin-left: 3rem;
-	/* border: 1px white solid; */
 }
 #lnum {
 	width: 5rem;
@@ -117,7 +113,6 @@ body {
 }
 #city {
 	text-align: center;
-	/* font-size: .9rem; */
 }
 #sensor_site {
 	font-weight: bold;
@@ -128,7 +123,6 @@ body {
 
 
 
-/* legend colors */
 .good {
 	background-color: greenyellow;
 	transition: 2s;
@@ -158,26 +152,7 @@ body {
 	background-color: white;
 }
 
-/* pHover:hover {
-	stroke: #69b3a2;
-	stroke-width: 1.5;
-} */
 
-
-
-/* demo code */
-/* .container {
-    width: 30rem;
-    height: 15rem;
-    border: 1px solid saddlebrown;
-}
-
-.bar {
-    fill: blueviolet;
-} */
-
-/* element {
-} */
 
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
