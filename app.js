@@ -96,13 +96,10 @@ d3.csv(test)
   const yaxis = svg.append("g")
   .call(d3.axisLeft(y));
 
-  const sumdat = d3.nest()
-    .key( d => {
-      // console.log(d)
-      return d.year
-    })
+  const aData = d3.nest()
+    .key( d => { return d.year })
     .entries(data.sort((a ,b) => (a.date - b.date)));
-  const years = sumdat.map(d => d.key); //array of years
+  const years = aData.map(d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
     .domain(years)
@@ -120,7 +117,7 @@ d3.csv(test)
 
   // const dots = svg
   //   .selectAll("dot")
-  //   .data(sumdat)
+  //   .data(aData)
   //   .enter()
   //     .append("g")
   //     .style("fill", d => (colors(d.year)))
@@ -134,60 +131,57 @@ d3.csv(test)
   //       .attr("cy", d => (y(d.pm25)))
   //       .style("fill", d => (colors(d.year)));
 
-        // 
-  // const lines = d3.line()
-  //   .x(d => x(d.date))
-  //   .y(d => y(d.pm25))
-  // svg.selectAll("lines")
-  //   .data([data])
+
+  // const line = d3.line()
+  //   .x(d => (d.pm25))
+  //   .y(d => {
+  //     console.log(d)
+  //     return d.pm25});
+  // const lines = svg.selectAll("myLines")
+  //   .data(aData)
   //   .enter()
   //   .append("path")
-  //     .attr("d", d => {
+  //     .attr("d", d => (line(d)))
+  //     .attr("stroke", d => {
   //       // console.log(d)
-  //       return lines(d.key)})
-  //     .attr("stroke", d => colors(d.key))
+  //       return colors(d.year)})
   //     .style("stroke-width", 5)
   //     .style("fill", "none")
 
-
-
-        // 
-  // const lines = svg.selectAll(".line")
-  //     .data(sumdat)
-  //     .enter()
-  //     .append("path")
-  //       .attr("fill", "none")
-  //       .attr("stroke", d => (colors(years)))
-  //       .attr("stroke-width", .3)
-  //       .attr("d", d => {
-  //         console.log(d)
-  //         return d3.line()
-  //           .x(d => d.year)
-  //           .y(d => d.pm25)
-  //           (d.values)
-  //       })
-
-  // working but black line
-  const line = svg
-      .data([data])
-      // same thing?
-    // .datum(data)
-      .append("path")
+  svg.selectAll(".line")
+    .data(aData)
+    .enter()
+    .append("path")
       .attr("fill", "none")
-      .attr("d", d3.line()
-        .x((d) => { return x(d.date) })
-        .y((d) => { return y(d.pm25) })
-      )
-      .attr("stroke", "black")
-      .attr("stroke-width", .3)
-    //   .on("mouseover")
+      .attr("stroke-width", 1.5)
+      .attr("d", d => {
+        return d3.line()
+          .x(d => { 
+            console.log(d)
+            return x(d.year)})
+          .y(d => { return y(d.pm25)})
+      })
+
+  // working but SINGLE black line
+  // const line = svg
+  //     .data([data])
+  //     // same thing?
+  //   // .datum(data)
+  //     .append("path")
+  //     .attr("fill", "none")
+  //     .attr("d", d3.line()
+  //       .x((d) => { return x(d.date) })
+  //       .y((d) => { return y(d.pm25) })
+  //     )
+  //     .attr("stroke", "black")
+  //     .attr("stroke-width", .3)
 
 
     //line legend
     //legend probably can't be drawn unless i redo lines
   const labels = svg
     .selectAll("labels")
-    .data(sumdat)
+    .data(aData)
     .enter()
       .append("g")
       .append("text")
@@ -202,8 +196,8 @@ d3.csv(test)
           value: d.values[d.values.length - 1] 
           });
         })
-        .attr("transform", d => { 
-          return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
+        // .attr("transform", d => { 
+        //   return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
         .attr("x", 12)
         .text(d => { return (d.year)})
         .style("fill", d => {return (colors(d.year))})
