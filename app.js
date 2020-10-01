@@ -81,7 +81,6 @@ d3.csv(test)
       d.year = d[" year"];
   });
   
-  
   x.domain(d3.extent(data, (d) => { 
     return d.date;
   }));
@@ -185,57 +184,31 @@ d3.csv(test)
 
 
     //line legend
-    const labels = svg
-      .selectAll("labels")
-      .data(sumdat)
-      .enter()
-        .append("g")
-        .append("text")
-          .datum(d => {
-            // console.log(d.values.sort((a, b) => {
-            //   debugger
-            //   a.date - b.date
-            // }))
-            // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
-            return ({
-            year: d.key,
-            value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1]
-            // last: 
-          })})
-          .attr("transform", d => { 
-            return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
-          .attr("x", 12)
-          .text(d => { return (d.year)})
-          .style("fill", d => {return (colors(d.year))})
-          .style("font-size", 15)
-
-
-    // const labels = svg
-    //   .selectAll("labels")
-    //   .data(sumdat)
-    //   .enter()
-    //     .append("g")
-    //     .append("text")
-    //       .datum(d => {
-    //         // console.log(d.values.sort((a, b) => {
-    //         //   debugger
-    //         //   a.date - b.date
-    //         // }))
-    //         // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
-    //         return ({
-    //         year: d.key,
-    //         value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1]
-    //         // last: 
-    //       })})
-    //       .attr("transform", d => { 
-    //         return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
-    //       .attr("x", 12)
-    //       .text(d => { return (d.year)})
-    //       .style("fill", d => {return (colors(d.year))})
-    //       .style("font-size", 15)
-    });
-
-
+    //legend probably can't be drawn unless i redo lines
+  const labels = svg
+    .selectAll("labels")
+    .data(sumdat)
+    .enter()
+      .append("g")
+      .append("text")
+        .datum(d => {
+          // console.log(d.values.sort((a, b) => {
+          //   debugger
+          //   a.date - b.date
+          // }))
+          // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
+          return ({
+          year: d.key,
+          value: d.values[d.values.length - 1] 
+          });
+        })
+        .attr("transform", d => { 
+          return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
+        .attr("x", 12)
+        .text(d => { return (d.year)})
+        .style("fill", d => {return (colors(d.year))})
+        .style("font-size", 15)
+});
 
     // .on("mouseover", function (d) {
     //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
@@ -245,25 +218,4 @@ d3.csv(test)
     //   d3.select(this).style("fill", "none")
     //     .attr('fill-opacity', 1);
     // });
-    
 
-      // Add the points
-    // svg
-    //   .append("g")
-    //   .selectAll("dot")
-    //   .data(data)
-    //   .enter()
-    //   .append("circle")
-    //   .attr("cx", (d) => { return x(d.date) })
-    //   .attr("cy", (d) => { return y(d.pm25) })
-    //   .attr("r", 5)
-    //   .attr("fill", "#69b3a2")
-
-
-    // Add the valueline path.
-    // svg.append("path")
-    //   .data([data])
-    //   .attr("class", "line")
-    //   .attr("d", valueLine)
-      // .attr("fill", "#69b3a2") //color
-    // Add the valueline path.
