@@ -6,6 +6,9 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+.tIcon:hover {
+	cursor: pointer;
+}
 
 .body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -150,6 +153,9 @@ body {
 
 .cont_legend {
 	background-color: white;
+}
+.lstatus {
+	margin-bottom: .5rem;
 }
 
 

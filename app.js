@@ -2,7 +2,7 @@
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street";
 const data = {};
-const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv"
+const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv";
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
 
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
@@ -102,7 +102,7 @@ d3.csv(test)
       // console.log(d)
       return d.year
     })
-    .entries(data);
+    .entries(data.sort((a ,b) => (a.date - b.date)));
   const years = sumdat.map(d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
@@ -119,6 +119,21 @@ d3.csv(test)
         .attr("cy", d => (y(d.pm25)))
         .style("fill", d => (colors(d.year)));
 
+  // const dots = svg
+  //   .selectAll("dot")
+  //   .data(sumdat)
+  //   .enter()
+  //     .append("g")
+  //     .style("fill", d => (colors(d.year)))
+  //   .selectAll("points")
+  //   .data(d => d.values)
+  //   .enter()
+  //       .attr("r", 2)
+  //       .attr("cx", d => {
+  //         console.log(d)
+  //         return (x(d.year))})
+  //       .attr("cy", d => (y(d.pm25)))
+  //       .style("fill", d => (colors(d.year)));
 
         // 
   // const lines = d3.line()
@@ -153,7 +168,8 @@ d3.csv(test)
   //           (d.values)
   //       })
 
-  const pHover = svg
+  // working but black line
+  const line = svg
       .data([data])
       // same thing?
     // .datum(data)
@@ -169,7 +185,7 @@ d3.csv(test)
 
 
     //line legend
-    svg
+    const labels = svg
       .selectAll("labels")
       .data(sumdat)
       .enter()
@@ -183,14 +199,40 @@ d3.csv(test)
             // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
             return ({
             year: d.key,
-            value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1],
+            value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1]
             // last: 
           })})
-          .attr("transform", d => { return ("translate(" + x(d.value.date) + "," + y(d.year) + ")")})
+          .attr("transform", d => { 
+            return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
           .attr("x", 12)
           .text(d => { return (d.year)})
           .style("fill", d => {return (colors(d.year))})
           .style("font-size", 15)
+
+
+    // const labels = svg
+    //   .selectAll("labels")
+    //   .data(sumdat)
+    //   .enter()
+    //     .append("g")
+    //     .append("text")
+    //       .datum(d => {
+    //         // console.log(d.values.sort((a, b) => {
+    //         //   debugger
+    //         //   a.date - b.date
+    //         // }))
+    //         // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
+    //         return ({
+    //         year: d.key,
+    //         value: d.values.sort((a, b) => (a.date - b.date))[d.values.length - 1]
+    //         // last: 
+    //       })})
+    //       .attr("transform", d => { 
+    //         return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
+    //       .attr("x", 12)
+    //       .text(d => { return (d.year)})
+    //       .style("fill", d => {return (colors(d.year))})
+    //       .style("font-size", 15)
     });
 
 
