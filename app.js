@@ -57,7 +57,7 @@ setInterval(widget, 50000);
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1080 - margin.left - margin.right
-  height = 400 - margin.top - margin.bottom
+  height = 500 - margin.top - margin.bottom
 
 const svg = d3.select('#my_dataviz')
     .append("svg") //adds svg ele
@@ -81,12 +81,12 @@ d3.csv(test)
       d.year = d[" year"];
   });
   
-  x.domain(d3.extent(data, (d) => { 
-    return d.date;
-  }));
-  
-  y.domain([0, 240]); 
   //use a Math.max(data.)+ some num to round it something instead of 2nd arg
+    x.domain(d3.extent(data, (d) => { 
+      return d.date;
+    }));
+    
+    y.domain([0, 240]); 
   
   const xaxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -105,6 +105,36 @@ d3.csv(test)
     .domain(years)
     .range(d3.schemeSet2);
     
+/////////////////////
+    // dot mouseover events
+
+    const infoWindow = d3.select("g")
+      .append("div")
+      .attr("class", "window")
+      .style("background-color", "black")
+      .style("padding", "2rem")
+      .style("color", "black")
+
+    const showInfo = (e, d) => {
+      console.log(d) //mouseover info
+      const info = `Year: ${d.year} <br>`
+
+      infoWindow.transition()
+        .duration(2)
+      infoWindow.style("opacity", 1)
+        .html(infoWindow)
+        // .style("left", (d3.event.pageX) + "px")
+        // .style("left", (d3.event.pageY) + "px")
+        .style("display", "inline-block")
+    };
+
+    const hideWindow = () => {
+      infoWindow
+        .transition()
+        .duration(200)
+        .style("opacity", 0)
+    }
+  ///////////////////////////
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -113,103 +143,61 @@ d3.csv(test)
         .attr("r", 2)
         .attr("cx", d => (x(d.date)))
         .attr("cy", d => (y(d.pm25)))
-        .style("fill", d => (colors(d.year)));
-
-  // const dots = svg
-  //   .selectAll("dot")
-  //   .data(aData)
-  //   .enter()
-  //     .append("g")
-  //     .style("fill", d => (colors(d.year)))
-  //   .selectAll("points")
-  //   .data(d => d.values)
-  //   .enter()
-  //       .attr("r", 2)
-  //       .attr("cx", d => {
-  //         console.log(d)
-  //         return (x(d.year))})
-  //       .attr("cy", d => (y(d.pm25)))
-  //       .style("fill", d => (colors(d.year)));
+        .style("fill", d => (colors(d.year)))
+    .on("mouseover", showInfo)
+    .on("mouseleave", hideWindow)
 
 
-  // const line = d3.line()
-  //   .x(d => (d.pm25))
-  //   .y(d => {
-  //     console.log(d)
-  //     return d.pm25});
-  // const lines = svg.selectAll("myLines")
-  //   .data(aData)
-  //   .enter()
-  //   .append("path")
-  //     .attr("d", d => (line(d)))
-  //     .attr("stroke", d => {
-  //       // console.log(d)
-  //       return colors(d.year)})
-  //     .style("stroke-width", 5)
-  //     .style("fill", "none")
 
-  svg.selectAll(".line")
-    .data(aData)
+  const line = d3.line()
+                  .x(d => { return x(d.date)})
+                  .y(d => { return y(d.pm25)});
+
+  const lines = svg.selectAll("lines")
+    .data(aData, d => {
+          return {
+          year: d.key,
+          value: d.values
+    }})
     .enter()
     .append("path")
-      .attr("fill", "none")
-      .attr("stroke-width", 1.5)
-      .attr("d", d => {
-        return d3.line()
-          .x(d => { 
-            console.log(d)
-            return x(d.year)})
-          .y(d => { return y(d.pm25)})
-      })
-
-  // working but SINGLE black line
-  // const line = svg
-  //     .data([data])
-  //     // same thing?
-  //   // .datum(data)
-  //     .append("path")
-  //     .attr("fill", "none")
-  //     .attr("d", d3.line()
-  //       .x((d) => { return x(d.date) })
-  //       .y((d) => { return y(d.pm25) })
-  //     )
-  //     .attr("stroke", "black")
-  //     .attr("stroke-width", .3)
-
+    .attr("d", d => {
+      return line(d.values)
+    })
+    .attr("stroke", d => {
+      return colors(d.key)
+    })
+    .attr("stroke-width", 1.5)
+    .attr("fill", "none")
+    
 
     //line legend
     //legend probably can't be drawn unless i redo lines
-  const labels = svg
-    .selectAll("labels")
-    .data(aData)
-    .enter()
-      .append("g")
-      .append("text")
-        .datum(d => {
-          // console.log(d.values.sort((a, b) => {
-          //   debugger
-          //   a.date - b.date
-          // }))
-          // console.log(((d.values.sort((a,b) => (a.date - b.date)))[d.values.length - 1]))
-          return ({
-          year: d.key,
-          value: d.values[d.values.length - 1] 
-          });
-        })
-        // .attr("transform", d => { 
-        //   return ("translate(" + x(d.year) + "," + y(d.value.date) + ")")}) //last value of data point
-        .attr("x", 12)
-        .text(d => { return (d.year)})
-        .style("fill", d => {return (colors(d.year))})
-        .style("font-size", 15)
-});
+    //Label works but it cant be utilized properly. can't move it!
+  // const labels = svg
+  //   .selectAll("labels")
+  //   .data(aData)
+  //   .enter()
+  //     .append("g")
+  //     .append("text")
+  //       .datum(d => {
+  //         return ({
+  //         year: d.key,
+  //         value: d.values[d.values.length - 1] 
+  //         })
+  //       })
+  //       // ERROR CHECK HERE.
+  //       // .attr("transform", d => { 
+  //       //   // debugger
+  //       //   // console.log(d)
+  //       //   return ("translate(" + x(d.value.pm25) + "," + y(d.value.year) + ")")}) //last value of data point
+  //        // disappears when attr(transform) comes in
+  //       .attr("x", 12)
+  //       .text(d => { return (d.year)})
+  //       .style("fill", d => {return (colors(d.year))})
+  //       .style("font-size", 20);
 
-    // .on("mouseover", function (d) {
-    //   d3.select(this).style("fill", d3.select(this).attr('stroke'))
-    //     .attr('fill-opacity', 0.3);
-    // })
-    // .on("mouseout", function (d) {
-    //   d3.select(this).style("fill", "none")
-    //     .attr('fill-opacity', 1);
-    // });
+
+
+});
 
