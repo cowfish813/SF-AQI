@@ -70,8 +70,6 @@ const svg = d3.select('#my_dataviz')
 const parseTime = d3.timeParse(`%m/%d`);
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
-// const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020]; 
-    //probably not necessary anymore
 
 d3.csv(test)
   .then((data) => {
@@ -92,19 +90,25 @@ d3.csv(test)
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); 
     //tickformat debugs calendar
+    //sets x axis
   
   const yaxis = svg.append("g")
   .call(d3.axisLeft(y));
+  // sets y axis
 
   const aData = d3.nest()
     .key( d => { return d.year })
     .entries(data.sort((a ,b) => (a.date - b.date)));
+    // regroups data into years by issuing a key
   const years = aData.map(d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
     .domain(years)
     .range(d3.schemeSet2);
     
+
+
+
 /////////////////////
     // dot mouseover events
 
@@ -116,22 +120,24 @@ d3.csv(test)
       .style("color", "black")
 
     const showInfo = (e, d) => {
-      console.log(d) //mouseover info
-      const info = `Year: ${d.year} <br>`
+      console.log(d) //mouseover data info
+      const info = 
+      `Year: ${d.year} <br>
+      PM25: ${d.pm25} <br>`
 
-      infoWindow.transition()
-        .duration(2)
+      // infoWindow.transition()
+        // .duration(2)
       infoWindow.style("opacity", 1)
         .html(infoWindow)
-        // .style("left", (d3.event.pageX) + "px")
-        // .style("left", (d3.event.pageY) + "px")
+        // .style("left", (d3.e.pageX) + "px")
+        // .style("top", (d3.e.pageY) + "px")
         .style("display", "inline-block")
     };
 
     const hideWindow = () => {
       infoWindow
-        .transition()
-        .duration(200)
+        // .transition()
+        // .duration(200)
         .style("opacity", 0)
     }
   ///////////////////////////
@@ -147,12 +153,9 @@ d3.csv(test)
     .on("mouseover", showInfo)
     .on("mouseleave", hideWindow)
 
-
-
   const line = d3.line()
                   .x(d => { return x(d.date)})
                   .y(d => { return y(d.pm25)});
-
   const lines = svg.selectAll("lines")
     .data(aData, d => {
           return {
@@ -161,14 +164,18 @@ d3.csv(test)
     }})
     .enter()
     .append("path")
+    // how to init only 1 line at a time?
     .attr("d", d => {
+      console.log(d.key === 2018)
       return line(d.values)
     })
     .attr("stroke", d => {
       return colors(d.key)
     })
-    .attr("stroke-width", 1.5)
+    .attr("stroke-width", 1)
     .attr("fill", "none")
+
+    // const spcLine =
     
 
     //line legend
