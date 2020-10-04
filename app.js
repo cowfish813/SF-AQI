@@ -97,9 +97,9 @@ d3.csv(test)
   // sets y axis
 
   const aData = d3.nest()
-    .key( d => { return d.year })
+    .key( d => { return d.year.trim() }) //trims empty space
     .entries(data.sort((a ,b) => (a.date - b.date)));
-    // regroups data into years by issuing a key
+    // groups data into years by issuing a key
   const years = aData.map(d => d.key); //array of years
   
   const colors = d3.scaleOrdinal()
@@ -120,7 +120,7 @@ d3.csv(test)
       .style("color", "black")
 
     const showInfo = (e, d) => {
-      console.log(d) //mouseover data info
+      // console.log(d) //mouseover data info
       const info = 
       `Year: ${d.year} <br>
       PM25: ${d.pm25} <br>`
@@ -141,6 +141,32 @@ d3.csv(test)
         .style("opacity", 0)
     }
   ///////////////////////////
+  
+  const line = d3.line()
+  .x(d => { return x(d.date)})
+  .y(d => { return y(d.pm25)});
+
+  const showLine = (e, selectedLine) => {
+    const selected = selectedLine.year.trim()
+
+    lines.attr("d", d => {
+      if (selected === d.key)  return line(d.values)
+    })
+      //if statement works hard coded...how do i put it together?
+      .attr("stroke", d => { return colors(d.key) })
+      .attr("stroke-width", 3)
+      .attr("fill", "none")
+
+}
+const lines = svg.selectAll("lines")
+  .data(aData, d => {
+  return {
+    year: d.key,
+    value: d.values
+  }})
+  .enter()
+  .append("path")
+      
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -151,33 +177,10 @@ d3.csv(test)
         .attr("cy", d => (y(d.pm25)))
         .style("fill", d => (colors(d.year)))
     .on("mouseover", showInfo)
+    .on("mouseover", showLine)
     .on("mouseleave", hideWindow)
-
-  const line = d3.line()
-                  .x(d => { return x(d.date)})
-                  .y(d => { return y(d.pm25)});
-  const lines = svg.selectAll("lines")
-    .data(aData, d => {
-          return {
-          year: d.key,
-          value: d.values
-    }})
-    .enter()
-    .append("path")
-    // how to init only 1 line at a time?
-    .attr("d", d => {
-      console.log(d.key === 2018)
-      return line(d.values)
-    })
-    .attr("stroke", d => {
-      return colors(d.key)
-    })
-    .attr("stroke-width", 1)
-    .attr("fill", "none")
-
-    // const spcLine =
-    
-
+      
+      
     //line legend
     //legend probably can't be drawn unless i redo lines
     //Label works but it cant be utilized properly. can't move it!
