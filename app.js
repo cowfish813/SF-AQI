@@ -44,7 +44,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
     } else {
-      //hide that damed key
+      //hide that damned key
       console.log("API limit exhausted");
     };
   })
@@ -149,13 +149,22 @@ d3.csv(test)
   const showLine = (e, selectedLine) => {
     const selected = selectedLine.year.trim()
 
+// 
+    d3.select(this).attr({
+      fill:"orange",
+      r: radius * 2
+    })
+// 
     lines.attr("d", d => {
       if (selected === d.key)  return line(d.values)
     })
-      //if statement works hard coded...how do i put it together?
       .attr("stroke", d => { return colors(d.key) })
       .attr("stroke-width", 3)
       .attr("fill", "none")
+    
+    // dots.append('g')
+    // .append('text')
+    // .text("selected")
 
 }
 const lines = svg.selectAll("lines")
@@ -166,19 +175,33 @@ const lines = svg.selectAll("lines")
   }})
   .enter()
   .append("path")
+
+  // const showText = (event, info) => {
+  //   // console.log(info.year)
+  //   dots.append('g')
+  //   .append('text', info.year)
+
+  //   const focusText = svg
+  //     .append('g')
+  //     .append('text')
+  // };
       
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
     .enter()
     .append("circle")
-        .attr("r", 2)
-        .attr("cx", d => (x(d.date)))
-        .attr("cy", d => (y(d.pm25)))
-        .style("fill", d => (colors(d.year)))
-    .on("mouseover", showInfo)
-    .on("mouseover", showLine)
-    .on("mouseleave", hideWindow)
+      .attr("r", 2)
+      .attr("cx", d => (x(d.date)))
+      .attr("cy", d => (y(d.pm25)))
+      .style("fill", d => (colors(d.year)))
+      .on("mouseover", showLine)
+      // .on("mouseover", showText)
+      
+
+
+  
+        // .style("opacity", 0)
       
       
     //line legend
