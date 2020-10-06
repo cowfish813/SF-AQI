@@ -88,7 +88,7 @@ d3.csv(test)
   
   const xaxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))); 
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))) 
     //tickformat debugs calendar
     //sets x axis
   
@@ -151,43 +151,71 @@ d3.csv(test)
     
     lines.attr("d", d => {
       // console.log(d)
-      if (selected === d.key)  return line(d.values)
+      if (selected === d.key) {
+
+        svg.selectAll("text")
+          .data([data], d => {
+            console.log(d)
+          })
+          .enter()
+          .append("t")
+          .append("text")
+          .text(selectedLine.pm25)
+          .attr("cx", (x(selectedLine.date)))
+          .attr("cy", (y(selectedLine.pm25)))
+          .text("20198")
+          .style("font-size", 10)
+          .attr("font_family", "sans-serif")  // Font type
+          .attr("font-size", "11px")  // Font size
+          .attr("fill", "darkgreen");   // Font color
+        
+        return line(d.values)
+      };
+        
     })
     .attr("stroke", d => { return colors(d.key) })
     .attr("stroke-width", 3)
     .attr("fill", "none")
     
     
-    // dot.attr("g", d => {
-    //   return d.date = selectedLine.date;
-    // })
-    dots.attr("g", d => {
-      // console.log(d.date, "1")
-      if (selectedLine.date === d.date) {
-        dot
-          .append("circle")
-          .attr("r", 10) //radius
-          .attr("cx", d => (x(selectedLine.date)))
-          .attr("cy", d => (y(selectedLine.pm25)))
-          .append("text")
-          .text("adfgsdfgfds")
-      } else {
-        // dot.attr("r", 3)
-      };
-    })
+    // dots.attr("g", d => {
+    //   if (selectedLine.date === d.date) {
+    //     // dot
+    //     //   .append("circle")
+    //     //   .attr("r", 5) //radius
+    //     //   .attr("cx", (x(selectedLine.date)))
+    //     //   .attr("cy", (y(selectedLine.pm25)))
+    //     //   .style("stroke", "black")
+    //     //   //WHY THIS NOT WORK?
 
-    
-  }
+      //     svg.selectAll("text")
+      //     .append("t")
+      //     .append("text")
+      //       .text( selectedLine.pm25 )
+      //       .attr("x", function (d) {
+      //         return x(selectedLine.date);  // Returns scaled location of x
+      //       })
+      //       .attr("y", function (d) {
+      //         return y(selectedLine.pm25);  // Returns scaled circle y
+      //       })
+      //       .text( "20198" )
+      //       .style("font-size", 105)
+      // .attr("font_family", "sans-serif")  // Font type
+      // .attr("font-size", "11px")  // Font size
+      // .attr("fill", "darkgreen");   // Font color
+    //   } 
+    // })    
+  };
+
   const dot = svg.append("g")
-    .selectAll("dot")
-    .data(data, d => {
-      // console.log(d.year)
-      return {
-        date: d.date,
-        pm25: d.pm25,
-        year: d.year
-      }
-    })
+    .selectAll("circle")
+    // .data(data, d => {
+    //   return {
+    //     date: d.date,
+    //     pm25: d.pm25,
+    //     year: d.year
+    //   }
+    // })
     .enter()
 
   const lines = svg.selectAll("lines")
