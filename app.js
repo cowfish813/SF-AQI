@@ -111,7 +111,6 @@ d3.csv(test)
 
 /////////////////////
     // dot mouseover events
-
     const infoWindow = d3.select("g")
       .append("div")
       .attr("class", "window")
@@ -141,67 +140,84 @@ d3.csv(test)
         .style("opacity", 0)
     }
   ///////////////////////////
-  
+
   const line = d3.line()
-  .x(d => { return x(d.date)})
-  .y(d => { return y(d.pm25)});
-
+    .x(d => { return x(d.date)})
+    .y(d => { return y(d.pm25)});
+  
   const showLine = (e, selectedLine) => {
+    // console.log(selectedLine)
     const selected = selectedLine.year.trim()
-
-// 
-    d3.select(this).attr({
-      fill:"orange",
-      r: radius * 2
-    })
-// 
+    
     lines.attr("d", d => {
+      // console.log(d)
       if (selected === d.key)  return line(d.values)
     })
-      .attr("stroke", d => { return colors(d.key) })
-      .attr("stroke-width", 3)
-      .attr("fill", "none")
+    .attr("stroke", d => { return colors(d.key) })
+    .attr("stroke-width", 3)
+    .attr("fill", "none")
     
-    // dots.append('g')
-    // .append('text')
-    // .text("selected")
+    
+    // dot.attr("g", d => {
+    //   return d.date = selectedLine.date;
+    // })
+    dots.attr("g", d => {
+      // console.log(d.date, "1")
+      if (selectedLine.date === d.date) {
+        dot
+          .append("circle")
+          .attr("r", 10) //radius
+          .attr("cx", d => (x(selectedLine.date)))
+          .attr("cy", d => (y(selectedLine.pm25)))
+          .append("text")
+          .text("adfgsdfgfds")
+      } else {
+        // dot.attr("r", 3)
+      };
+    })
 
-}
-const lines = svg.selectAll("lines")
-  .data(aData, d => {
-  return {
-    year: d.key,
-    value: d.values
-  }})
-  .enter()
-  .append("path")
+    
+  }
+  const dot = svg.append("g")
+    .selectAll("dot")
+    .data(data, d => {
+      // console.log(d.year)
+      return {
+        date: d.date,
+        pm25: d.pm25,
+        year: d.year
+      }
+    })
+    .enter()
 
-  // const showText = (event, info) => {
-  //   // console.log(info.year)
-  //   dots.append('g')
-  //   .append('text', info.year)
+  const lines = svg.selectAll("lines")
+    .data(aData, d => {
+      // console.log(d)
+    return {
+      year: d.key,
+      value: d.values
+    }})
+    .enter()
+    .append("path")
 
-  //   const focusText = svg
-  //     .append('g')
-  //     .append('text')
-  // };
+
+    
       
   const dots = svg.append("g")
     .selectAll("dot")
-    .data(data)
+    .data(data, d => {
+      return {
+        date: d.date,
+      }
+    })
     .enter()
     .append("circle")
-      .attr("r", 2)
+      .attr("r", 2) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
       .style("fill", d => (colors(d.year)))
       .on("mouseover", showLine)
-      // .on("mouseover", showText)
       
-
-
-  
-        // .style("opacity", 0)
       
       
     //line legend
