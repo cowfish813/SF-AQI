@@ -68,14 +68,24 @@ body {
 }
 
 .APIwidget{
-	width: 15rem;
-	height: 15rem;
+	width: 20rem;
+	height: 18rem;
 	border-radius: 1rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 }
+
+.num_icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.wid_ele {
+	margin: .5rem;
+}
+
 
 .legend {
 	display: flex;

@@ -4,6 +4,7 @@ let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //cha
 const data = {};
 const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv";
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
+const img = document.createElement('img');
 
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
@@ -15,27 +16,35 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       const aqi = data.data.aqi;
       let status = "";
       let color = "";
+      let png = ""
       if (aqi > 300) {
           status = "Hazardous";
           color ="brown";
+          png = "6"
         } else if (aqi > 200) {
           status = "Very Unhealthy";
           color ="puple";
+          png = "5"
         } else if (aqi > 151) {
           status = "Unhealthy";
           color = "red";
+          png = "4"
         } else if (aqi > 100) {
           status = "USG";
           color = "orange";
+          png = "3"
         } else if (aqi > 50) {
           status = "Moderate";
           color = "yellow";
+          png = "2"
         } else {
           status = "Good";
           color = "greenyellow";
+          png = "1"
         };
         //assembles widget without jank or preloaded elements
             //appends HTML elements to the DOM for efficient loading
+        img.src =`./assets/aqi/${png}.png`;
         document.getElementById("aqi_widget").style.backgroundColor = color;
         document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
@@ -43,6 +52,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("aqi").innerHTML = aqi;
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
+        document.getElementById("widget_icon").appendChild(img);
     } else {
       //hide that damned key
       console.log("API limit exhausted");
@@ -53,7 +63,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
   }));
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
-setInterval(widget, 50000);
+setInterval(widget, 500);
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1080 - margin.left - margin.right
@@ -126,7 +136,8 @@ d3.csv(test)
     };
   }; //fxn loads an object for better efficiency
 
-  d3.select(this).on("mouseout", null);
+  // d3.select(this).on("mouseout", null);
+  
   const showLine = (e, selectedLine) => {
     const hoveredYear = selectedLine.year.trim();
     const pm25 = selectedLine.pm25;
@@ -138,7 +149,7 @@ d3.csv(test)
           // .style("fill", d => { return (colors(d.year)) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
           .style("font-size", 15)
-          .attr('opacity', '.95')
+          .attr('opacity', '1')
           // .style("opacity", "1") //need to make text appear OVER dots
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
@@ -146,7 +157,7 @@ d3.csv(test)
         return line(d.values);
       }
       if (compare[d.key]) {
-        return line(d.values); //handles click
+        return line(d.values); // from handleclick
       }
     })
     .attr("stroke", d => { return colors(d.key) })
@@ -176,7 +187,7 @@ d3.csv(test)
       .attr("r", 4) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.3')
+      .attr('opacity', '.25')
       .style("fill", d => (colors(d.year)))
     .on("click", showCompare)
     .on("mouseover", showLine);

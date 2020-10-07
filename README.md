@@ -22,24 +22,31 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       const aqi = data.data.aqi;
       let status = "";
       let color = "";
+      let png = ""
       if (aqi > 300) {
           status = "Hazardous";
           color ="brown";
+          png = "6"
         } else if (aqi > 200) {
           status = "Very Unhealthy";
           color ="puple";
+          png = "5"
         } else if (aqi > 151) {
           status = "Unhealthy";
           color = "red";
-        } else if (aqi > 150) {
-          status = "Unhealthy for Sensitive Groups";
+          png = "4"
+        } else if (aqi > 100) {
+          status = "USG";
           color = "orange";
+          png = "3"
         } else if (aqi > 50) {
           status = "Moderate";
           color = "yellow";
+          png = "2"
         } else {
           status = "Good";
           color = "greenyellow";
+          png = "1"
         };
         //assembles widget without jank or preloaded elements
             //appends HTML elements to the DOM for efficient loading
@@ -50,8 +57,11 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("aqi").innerHTML = aqi;
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
+        const img = document.createElement('img');
+        img.src =`./assets/aqi/${png}.png`;
+        document.getElementById("widget_icon").appendChild(img);
     } else {
-      //hide that damed key
+      //hide that damned key
       console.log("API limit exhausted");
     };
   })
@@ -62,10 +72,34 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
 
 "fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I constructed the functional widget entirely with CSS and promises for smoother load times. The application is able to call this function every 5 minutes and update without having to reload the widget or entire webpage.
 
+```
+  const showLine = (e, selectedLine) => {
+    const hoveredYear = selectedLine.year.trim();
+    const pm25 = selectedLine.pm25;
+
+    lines.attr("d", d => {
+      if (hoveredYear === d.key) {
+        labels.attr("x", 12)
+          .text(d => { return (`Year: ${hoveredYear}`) })
+          .style("font-size", 15)
+          .attr('opacity', '1')
+          .attr("transform",
+            ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
+          );
+        return line(d.values);
+      }
+      if (compare[d.key]) {
+        return line(d.values); // from handleclick
+      }
+    })
+    .attr("stroke", d => { return colors(d.key) })
+  };
+```
+
 
 
 
 Future additions
     * AQI forecasts
 
-* Utilizes D3.js to 
+* Utilizes D3.js to observe changes in AQI over the years in San Francisco. 
