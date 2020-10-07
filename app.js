@@ -115,16 +115,10 @@ d3.csv(test)
     .data(aData)
     .enter()
     .append("g")
-    .append("text")
-    // .datum(d => {
-    //   return ({
-    //   year: d.key,
-    //   value: d.values[d.values.length - 1] 
-    //   })
-    // })
+    .append("text");
 
   const showCompare = (e, d) => {
-    const year = d.year.trim()
+    const year = d.year.trim();
     if (compare[year]) {
       compare[year] = false;
     } else {
@@ -145,7 +139,6 @@ d3.csv(test)
     const pm25 = selectedLine.pm25;
 
     lines.attr("d", d => {
-      // console.log(d)
       if (hoveredYear === d.key) {
         labels.attr("x", 12)
           .text(d => { return (`Year: ${hoveredYear}`) })
@@ -157,9 +150,13 @@ d3.csv(test)
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
           );
+          console.log(d.values)
         return line(d.values);
       }
-  })
+      if (compare[d.key]) {
+        return line(d.values)
+      }
+    })
     .attr("stroke", d => { return colors(d.key) })
     .attr("stroke-width", 3)
     .attr("fill", "none");
