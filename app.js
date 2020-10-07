@@ -1,6 +1,6 @@
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
-let sensorSite = "california/san-francisco/san-francisco-arkansas-street";
+let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
 const data = {};
 const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv";
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
@@ -69,6 +69,7 @@ const svg = d3.select('#my_dataviz')
 const parseTime = d3.timeParse(`%m/%d`);
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
+const compare = {};
 
 d3.csv(test)
   .then((data) => {
@@ -77,12 +78,12 @@ d3.csv(test)
       d.pm25 = d[" pm25"];
       d.year = d[" year"];
   });
-  
+
   //use a Math.max(data.)+ some num to round it something instead of 2nd arg
     x.domain(d3.extent(data, (d) => { 
       return d.date;
     }));
-    
+
     y.domain([0, 240]); 
   
   const xaxis = svg.append("g")
@@ -109,40 +110,56 @@ d3.csv(test)
     .x(d => { return x(d.date)})
     .y(d => { return y(d.pm25)});
 
-    const labels = svg
-      .selectAll("labels")
-      .data(aData)
-      .enter()
-      .append("g")
-      .append("text")
-      // .datum(d => {
-      //   return ({
-      //   year: d.key,
-      //   value: d.values[d.values.length - 1] 
-      //   })
-      // })
-  
+  const labels = svg
+    .selectAll("labels")
+    .data(aData)
+    .enter()
+    .append("g")
+    .append("text")
+    // .datum(d => {
+    //   return ({
+    //   year: d.key,
+    //   value: d.values[d.values.length - 1] 
+    //   })
+    // })
+
+  const showCompare = (e, d) => {
+    const year = d.year.trim()
+    if (compare[year]) {
+      compare[year] = false;
+    } else {
+      compare[year] = d;
+    };
+
+    lines.attr("d", d => {
+
+    })
+      .attr("stroke", d => { return colors(compare.year) })
+      .attr("stroke-width", 3)
+      .attr("fill", "none");
+  }; //fxn loads an object for better efficiency
+
+
   const showLine = (e, selectedLine) => {
-    const selected = selectedLine.year.trim();
+    const hoveredYear = selectedLine.year.trim();
     const pm25 = selectedLine.pm25;
 
     lines.attr("d", d => {
       // console.log(d)
-      if (selected === d.key) {
-
+      if (hoveredYear === d.key) {
         labels.attr("x", 12)
-          .text(d => { return (`Year: ${selected}`) })
+          .text(d => { return (`Year: ${hoveredYear}`) })
           // .style("fill", d => { return (colors(d.year)) })
+          .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
           .style("font-size", 15)
-          .attr('opacity', '10')
-          // .style("position", "relative")
-          // .style("opacity", 1)
+          .attr('opacity', '.95')
+          // .style("opacity", "1")
           .attr("transform",
-             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
+            ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
           );
-        return line(d.values)
-      };
-    })
+        return line(d.values);
+      }
+  })
     .attr("stroke", d => { return colors(d.key) })
     .attr("stroke-width", 3)
     .attr("fill", "none");
@@ -150,14 +167,13 @@ d3.csv(test)
 
   const lines = svg.selectAll("lines")
     .data(aData, d => {
-      // console.log(d)
     return {
       year: d.key,
       value: d.values
     }})
     .enter()
     .append("path")
-    .attr('opacity', '.9');
+    .attr('opacity', '1')
       
   const dots = svg.append("g")
     .selectAll("dot")
@@ -168,12 +184,13 @@ d3.csv(test)
     })
     .enter()
     .append("circle")
-      .attr("r", 2) //radius
+      .attr("r", 4) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.7')
+      .attr('opacity', '.35')
       .style("fill", d => (colors(d.year)))
       .on("mouseover", showLine)
+      .on("click", showCompare)
 
     /////////////////////
     // dot mouseover events - prettier than what's present
@@ -205,8 +222,7 @@ d3.csv(test)
         // .duration(200)
         .style("opacity", 0)
     }
-  ///////////////////////////
-
+  /////////////////
 
 });
 
