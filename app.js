@@ -144,6 +144,28 @@ d3.csv(test)
   const line = d3.line()
     .x(d => { return x(d.date)})
     .y(d => { return y(d.pm25)});
+
+
+
+    const labels = svg
+      .selectAll("labels")
+      .data(aData)
+      .enter()
+      .append("g")
+      .append("text")
+      // .datum(d => {
+      //   return ({
+      //   year: d.key,
+      //   value: d.values[d.values.length - 1] 
+      //   })
+      // })
+      // ERROR CHECK HERE.
+      // .attr("transform", d => { 
+      //   // debugger
+      //   // console.log(d)
+      //   return ("translate(" + x(d.value.pm25) + "," + y(d.value.year) + ")")}) //last value of data point
+      // disappears when attr(transform) comes in
+
   
   const showLine = (e, selectedLine) => {
     // console.log(selectedLine)
@@ -153,21 +175,27 @@ d3.csv(test)
       // console.log(d)
       if (selected === d.key) {
 
-        svg.selectAll("text")
-          .data([data], d => {
-            console.log(d)
-          })
-          .enter()
-          .append("t")
-          .append("text")
-          .text(selectedLine.pm25)
+        labels.attr("x", 12)
+          .text(d => { return (selected) })
+          // .style("fill", d => { return (colors(d.year)) })
+          .style("font-size", 20)
           .attr("cx", (x(selectedLine.date)))
           .attr("cy", (y(selectedLine.pm25)))
-          .text("20198")
-          .style("font-size", 10)
-          .attr("font_family", "sans-serif")  // Font type
-          .attr("font-size", "11px")  // Font size
-          .attr("fill", "darkgreen");   // Font color
+        // svg.selectAll("text")
+        //   .data([data], d => {
+        //     console.log(d)
+        //   })
+        //   .enter()
+        //   .append("t")
+        //   .append("text")
+        //   .text(selectedLine.pm25)
+        //   .attr("cx", (x(selectedLine.date)))
+        //   .attr("cy", (y(selectedLine.pm25)))
+        //   .text("20198")
+        //   .style("font-size", 10)
+        //   .attr("font_family", "sans-serif")  // Font type
+        //   .attr("font-size", "11px")  // Font size
+        //   .attr("fill", "darkgreen");   // Font color
         
         return line(d.values)
       };
@@ -245,36 +273,5 @@ d3.csv(test)
       .attr("cy", d => (y(d.pm25)))
       .style("fill", d => (colors(d.year)))
       .on("mouseover", showLine)
-      
-      
-      
-    //line legend
-    //legend probably can't be drawn unless i redo lines
-    //Label works but it cant be utilized properly. can't move it!
-  // const labels = svg
-  //   .selectAll("labels")
-  //   .data(aData)
-  //   .enter()
-  //     .append("g")
-  //     .append("text")
-  //       .datum(d => {
-  //         return ({
-  //         year: d.key,
-  //         value: d.values[d.values.length - 1] 
-  //         })
-  //       })
-  //       // ERROR CHECK HERE.
-  //       // .attr("transform", d => { 
-  //       //   // debugger
-  //       //   // console.log(d)
-  //       //   return ("translate(" + x(d.value.pm25) + "," + y(d.value.year) + ")")}) //last value of data point
-  //        // disappears when attr(transform) comes in
-  //       .attr("x", 12)
-  //       .text(d => { return (d.year)})
-  //       .style("fill", d => {return (colors(d.year))})
-  //       .style("font-size", 20);
-
-
-
 });
 
