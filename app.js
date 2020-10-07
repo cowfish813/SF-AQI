@@ -133,9 +133,6 @@ d3.csv(test)
 
     lines.attr("d", d => {
       if (hoveredYear === d.key) {
-
-
-
         labels.attr("x", 12)
           .text(d => { return (`Year: ${hoveredYear}`) })
           // .style("fill", d => { return (colors(d.year)) })
@@ -153,7 +150,6 @@ d3.csv(test)
       }
     })
     .attr("stroke", d => { return colors(d.key) })
-
   };
 
   const lines = svg.selectAll("lines")
@@ -181,11 +177,9 @@ d3.csv(test)
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
       .attr('opacity', '.3')
-      .style("fill", d => (colors(d.year)));
-
-  dots
+      .style("fill", d => (colors(d.year)))
     .on("click", showCompare)
-    .on("mouseover", showLine)
+    .on("mouseover", showLine);
 
     /////////////////////
     // dot mouseover events - prettier than what's present
