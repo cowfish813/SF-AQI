@@ -124,42 +124,36 @@ d3.csv(test)
     } else {
       compare[year] = d;
     };
-
-    lines.attr("d", d => {
-
-    })
-      .attr("stroke", d => { return colors(compare.year) })
-      .attr("stroke-width", 3)
-      .attr("fill", "none");
   }; //fxn loads an object for better efficiency
 
-
+  d3.select(this).on("mouseout", null);
   const showLine = (e, selectedLine) => {
     const hoveredYear = selectedLine.year.trim();
     const pm25 = selectedLine.pm25;
 
     lines.attr("d", d => {
       if (hoveredYear === d.key) {
+
+
+
         labels.attr("x", 12)
           .text(d => { return (`Year: ${hoveredYear}`) })
           // .style("fill", d => { return (colors(d.year)) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
           .style("font-size", 15)
           .attr('opacity', '.95')
-          // .style("opacity", "1")
+          // .style("opacity", "1") //need to make text appear OVER dots
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
           );
-          console.log(d.values)
         return line(d.values);
       }
       if (compare[d.key]) {
-        return line(d.values)
+        return line(d.values); //handles click
       }
     })
     .attr("stroke", d => { return colors(d.key) })
-    .attr("stroke-width", 3)
-    .attr("fill", "none");
+
   };
 
   const lines = svg.selectAll("lines")
@@ -171,6 +165,8 @@ d3.csv(test)
     .enter()
     .append("path")
     .attr('opacity', '1')
+    .attr("stroke-width", 2)
+    .attr("fill", "none");
       
   const dots = svg.append("g")
     .selectAll("dot")
@@ -184,10 +180,12 @@ d3.csv(test)
       .attr("r", 4) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.35')
-      .style("fill", d => (colors(d.year)))
-      .on("mouseover", showLine)
-      .on("click", showCompare)
+      .attr('opacity', '.3')
+      .style("fill", d => (colors(d.year)));
+
+  dots
+    .on("click", showCompare)
+    .on("mouseover", showLine)
 
     /////////////////////
     // dot mouseover events - prettier than what's present
