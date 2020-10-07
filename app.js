@@ -168,34 +168,20 @@ d3.csv(test)
 
   
   const showLine = (e, selectedLine) => {
-    // console.log(selectedLine)
-    const selected = selectedLine.year.trim()
-    
+    const selected = selectedLine.year.trim();
+    const pm25 = selectedLine.pm25;
+
     lines.attr("d", d => {
       // console.log(d)
       if (selected === d.key) {
-
         labels.attr("x", 12)
-          .text(d => { return (selected) })
+          .text(d => { return (`Year: ${selected}`) })
           // .style("fill", d => { return (colors(d.year)) })
-          .style("font-size", 20)
-          .attr("cx", (x(selectedLine.date)))
-          .attr("cy", (y(selectedLine.pm25)))
-        // svg.selectAll("text")
-        //   .data([data], d => {
-        //     console.log(d)
-        //   })
-        //   .enter()
-        //   .append("t")
-        //   .append("text")
-        //   .text(selectedLine.pm25)
-        //   .attr("cx", (x(selectedLine.date)))
-        //   .attr("cy", (y(selectedLine.pm25)))
-        //   .text("20198")
-        //   .style("font-size", 10)
-        //   .attr("font_family", "sans-serif")  // Font type
-        //   .attr("font-size", "11px")  // Font size
-        //   .attr("fill", "darkgreen");   // Font color
+          .style("font-size", 15)
+          // .style("position", "relative")
+          .attr("transform",
+             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
+          );
         
         return line(d.values)
       };
