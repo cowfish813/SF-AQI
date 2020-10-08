@@ -66,7 +66,7 @@ widget();
 setInterval(widget, 500);
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
-  width = 1080 - margin.left - margin.right
+  width = 1040 - margin.left - margin.right
   height = 500 - margin.top - margin.bottom
 
 const svg = d3.select('#my_dataviz')
@@ -149,8 +149,8 @@ d3.csv(test)
           // .style("fill", d => { return (colors(d.year)) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
           .style("font-size", 15)
-          .attr('opacity', '1')
-          // .style("opacity", "1") //need to make text appear OVER dots
+          // .attr('opacity', '1')
+          .style("opacity", "1") //need to make text appear OVER dots
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
           );

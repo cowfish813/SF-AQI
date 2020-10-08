@@ -66,6 +66,9 @@ body {
 #my_dataviz {
 	margin-bottom: 2rem;
 }
+svg {
+	width: 106%;
+}
 
 .APIwidget{
 	width: 20rem;
