@@ -47,7 +47,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
             //appends HTML elements to the DOM for efficient loading
         img.src =`./assets/aqi/${png}.png`;
         document.getElementById("aqi_widget").style.backgroundColor = color;
-        document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
         document.getElementById("status").innerHTML = status;
         document.getElementById("aqi").innerHTML = aqi;

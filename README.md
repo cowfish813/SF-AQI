@@ -96,9 +96,36 @@ The application is able to call this function every 5 minutes and update without
 ```
 
 
-
+```
+.cloud{ 
+   width: 33.85rem;
+   height: 15rem;
+   box-shadow: .8rem .8rem rgba(0,0,0,0.2);
+   border-radius: 9.25rem;
+   margin: 8rem;
+}
+.cloud::after, .cloud::before {
+    content: "";
+    position: relative;
+    display: inline-block;
+    background: inherit;
+    border-radius: inherit;
+}
+.cloud::after {
+    width: 12.25rem;
+    height: 12.25rem;
+    top: -6.75rem;
+  	right: 10rem;
+}
+.cloud::before {
+    width: 15.25rem;
+    height: 15.25rem;
+    top: -5.7rem;
+  	left: 13.5rem;
+}
+```
+Shows how I was able to draw a cloud entirely from CSS and 1 div in HTML. The cloud carries another div that houses the content from the promises in "widget".
 
 Future additions
     * AQI forecasts
-
-* Utilizes D3.js to observe changes in AQI over the years in San Francisco. 
+    * Zooming in

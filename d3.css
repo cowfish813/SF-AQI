@@ -78,23 +78,23 @@ svg {
 }
 .widgetContent{
 	display: flex;
-	/* justify-content: center; */
 	align-items: center;
 	flex-direction: column;
 	position: absolute;
-	/* left: 30rem; */
-	/* top: 50rem; */
 	margin-top: -14rem;
 	margin-left: 4rem;
 	z-index: 2;
 }
+element.style {
+	/* border: 0px !important; */
+}
+
 .cloud{ 
-   width: 33.85rem;
-   height: 15rem;
-   box-shadow: .8rem .8rem rgba(0,0,0,0.2);
-   border-radius: 9.25rem;
-   margin: 8rem;
-   /* position: relative; */
+	width: 33.85rem;
+	height: 15rem;
+	box-shadow: .8rem .8rem rgba(0,0,0,0.2);
+	border-radius: 9.25rem;
+	margin: 8rem;
 }
 .cloud::after, .cloud::before {
     content: "";
@@ -108,15 +108,12 @@ svg {
     height: 12.25rem;
     top: -6.75rem;
 	right: 10rem;
-	/* position: relative; */
-	/* background-color: black; */
 }
 .cloud::before {
     width: 15.25rem;
     height: 15.25rem;
     top: -5.7rem;
 	left: 13.5rem;
-	/* background-color: blue; */
 }
 
 
