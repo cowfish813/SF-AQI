@@ -188,27 +188,27 @@ element.style {
 
 
 .good {
-	background-color: greenyellow;
+	background-color: #6ECD4B;
 	transition: 2s;
 }
 .moderate {
-	background-color: yellow;
+	background-color: #FFDD3B;
 	transition: 2s;
 }
 .usg {
-	background-color: orange;
+	background-color: #FA7430;
 	transition: 2s;
 }
 .uh {
-	background-color: red;
+	background-color: #E52224;
 	transition: 2s;
 }
 .vuh {
-	background-color: purple;
+	background-color: #A83E85;
 	transition: 2s;
 }
 .haz {
-	background-color: brown;
+	background-color: #8D3D3C;
 	transition: 2s;
 }
 

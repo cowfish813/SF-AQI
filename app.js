@@ -20,27 +20,27 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       let png = ""
       if (aqi > 300) {
           status = "Hazardous";
-          color ="brown";
+          color ="8D3D3C";
           png = "6"
         } else if (aqi > 200) {
           status = "Very Unhealthy";
-          color ="puple";
+          color ="A83E85";
           png = "5"
         } else if (aqi > 151) {
           status = "Unhealthy";
-          color = "red";
+          color = "E52224";
           png = "4"
         } else if (aqi > 100) {
           status = "USG";
-          color = "orange";
+          color = "FA7430";
           png = "3"
         } else if (aqi > 50) {
           status = "Moderate";
-          color = "yellow";
+          color = "FFDD3B";
           png = "2"
         } else {
           status = "Good";
-          color = "greenyellow";
+          color = "6ECD4B";
           png = "1"
         };
         //assembles widget without jank or preloaded elements
