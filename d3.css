@@ -73,16 +73,47 @@ svg {
 	margin-left: 2rem;
 	font-size: .85rem;
 }
-
+.APIwidget span {
+	/* margin-bottom: 1rem; */
+}
 .APIwidget{
 	width: 20rem;
 	height: 18rem;
 	border-radius: 1rem;
+	margin: 5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 }
+/* .cloud{ 
+	background: lightcoral; */
+   /* margin-top: 70px; */
+   /* width: 33.85rem;
+   height: 15rem;
+   box-shadow: .8rem .8rem rgba(0,0,0,0.2);
+   border-radius: 6.25rem;
+}
+.cloud::after, .cloud::before {
+    content: "";
+    position: relative;
+    display: inline-block;
+    background: inherit;
+    border-radius: inherit;
+}
+.cloud::after {
+    width: 6.25rem;
+    height: 16.25rem;
+    top: -3.75rem;
+    right: 7.5rem;
+}
+.cloud::before {
+    width: 13.25rem;
+    height: 13.25rem;
+    top: -7.7rem;
+    left: 8.125rem;
+} */
+
 
 .num_icon {
 	display: flex;
@@ -131,12 +162,7 @@ svg {
 	width: 5rem;
 }
 
-.APIwidget {
-	margin: 5rem;
-}
-.APIwidget span {
-	margin-bottom: 1rem;
-}
+
 #title_conditions {
 	font-weight: bolder;
 	font-size: 1.5rem;

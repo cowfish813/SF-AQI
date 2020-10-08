@@ -9,6 +9,7 @@ const img = document.createElement('img');
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
+    // completes first widget
     if (res) {
       for (let key in res) {
         data[key] = res[key];
@@ -57,7 +58,14 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       //hide that damned key
       console.log("API limit exhausted");
     };
+
+    // console.log(res.data.forecast.daily.pm25[0].avg)
   })
+  // .then(res => { //forecast
+  //   debugger
+  //   console.log(res.data.forecast.daily.pm25)
+  //   // console.log(res.data.forecast.daily)
+  // })
   .catch(err => {
     console.log(err);
   }));
@@ -184,7 +192,7 @@ d3.csv(test)
     })
     .enter()
     .append("circle")
-      .attr("r", 4) //radius
+      .attr("r", 5) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
       .attr('opacity', '.25')
