@@ -50,6 +50,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         };
         //assembles widget without jank or preloaded elements
             //appends HTML elements to the DOM for efficient loading
+        img.src =`./assets/aqi/${png}.png`;
         document.getElementById("aqi_widget").style.backgroundColor = color;
         document.getElementById("aqi_widget").style.border = "1px black solid";
         document.getElementById("title_conditions").innerHTML = "Conditions Today";
@@ -57,11 +58,8 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("aqi").innerHTML = aqi;
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
-        const img = document.createElement('img');
-        img.src =`./assets/aqi/${png}.png`;
         document.getElementById("widget_icon").appendChild(img);
     } else {
-      //hide that damned key
       console.log("API limit exhausted");
     };
   })
@@ -70,7 +68,8 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
   }));
 ```
 
-"fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I constructed the functional widget entirely with CSS and promises for smoother load times. The application is able to call this function every 5 minutes and update without having to reload the widget or entire webpage.
+"fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I dynamically assembeled the functional widget entirely with CSS and promises.
+The application is able to call this function every 5 minutes and update without having to reload the widget or entire webpage.
 
 ```
   const showLine = (e, selectedLine) => {
