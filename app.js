@@ -54,6 +54,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
         document.getElementById("widget_icon").appendChild(img);
+        // document.getElementsById("cloud").style.boxShadow = ".8rem .8rem"
     } else {
       //hide that damned key
       console.log("API limit exhausted");

@@ -76,23 +76,25 @@ svg {
 .APIwidget span {
 	/* margin-bottom: 1rem; */
 }
-.APIwidget{
-	width: 20rem;
-	height: 18rem;
-	border-radius: 1rem;
-	margin: 5rem;
+.widgetContent{
 	display: flex;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
 	flex-direction: column;
+	position: absolute;
+	/* left: 30rem; */
+	/* top: 50rem; */
+	margin-top: -14rem;
+	margin-left: 4rem;
+	z-index: 2;
 }
-/* .cloud{ 
-	background: lightcoral; */
-   /* margin-top: 70px; */
-   /* width: 33.85rem;
+.cloud{ 
+   width: 33.85rem;
    height: 15rem;
    box-shadow: .8rem .8rem rgba(0,0,0,0.2);
-   border-radius: 6.25rem;
+   border-radius: 9.25rem;
+   margin: 8rem;
+   /* position: relative; */
 }
 .cloud::after, .cloud::before {
     content: "";
@@ -102,17 +104,20 @@ svg {
     border-radius: inherit;
 }
 .cloud::after {
-    width: 6.25rem;
-    height: 16.25rem;
-    top: -3.75rem;
-    right: 7.5rem;
+    width: 12.25rem;
+    height: 12.25rem;
+    top: -6.75rem;
+	right: 12rem;
+	/* position: relative; */
+	/* background-color: black; */
 }
 .cloud::before {
-    width: 13.25rem;
-    height: 13.25rem;
-    top: -7.7rem;
-    left: 8.125rem;
-} */
+    width: 15.25rem;
+    height: 15.25rem;
+    top: -5.7rem;
+	left: 13.5rem;
+	/* background-color: blue; */
+}
 
 
 .num_icon {
