@@ -81,8 +81,8 @@ svg {
 	align-items: center;
 	flex-direction: column;
 	position: absolute;
-	margin-top: -14rem;
-	margin-left: 4rem;
+	margin-top: -15rem;
+	margin-left: 3rem;
 	z-index: 2;
 }
 element.style {
@@ -90,7 +90,7 @@ element.style {
 }
 
 .cloud{ 
-	width: 33.85rem;
+	width: 31.85rem;
 	height: 15rem;
 	box-shadow: .8rem .8rem rgba(0,0,0,0.2);
 	border-radius: 9.25rem;

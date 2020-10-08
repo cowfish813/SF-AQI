@@ -143,17 +143,16 @@ d3.csv(test)
       compare[year] = d;
     };
   }; //fxn loads an object for better efficiency
-
-  // d3.select(this).on("mouseout", null);
   
-  const showLine = (e, selectedLine) => {
+  //hover over dots/graph
+  const showLine = (e, selectedLine) => { 
     const hoveredYear = selectedLine.year.trim();
     const pm25 = selectedLine.pm25;
 
     lines.attr("d", d => {
       if (hoveredYear === d.key) {
         labels.attr("x", 12)
-          .text(d => { return (`Year: ${hoveredYear}`) })
+          .text(d => { return (`PM25: ${pm25}`) })
           // .style("fill", d => { return (colors(d.year)) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
           .style("font-size", 15)
@@ -195,10 +194,22 @@ d3.csv(test)
       .attr("r", 5) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.25')
+      .attr('opacity', '.15')
       .style("fill", d => (colors(d.year)))
     .on("click", showCompare)
     .on("mouseover", showLine);
+
+  const buttons = d3.select("body")
+    .selectAll("input")
+    .data(aData, d => {console.log(d)})
+    .enter()
+    .append("input")
+    .attr("type", "button")
+    .attr("class", "babyCloud")
+    .attr("value", d => { return d.key })
+    // .on("click", showCompare)
+
+
 
     /////////////////////
     // dot mouseover events - prettier than what's present
