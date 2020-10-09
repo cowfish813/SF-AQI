@@ -6,6 +6,18 @@ const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20fi
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
 const img = document.createElement('img');
 
+// modal
+const modal = document.getElementById("dirModal");
+const modalButton = document.getElementById("modalButton");
+const span = document.getElementsByClassName("close")
+modalButton.onclick = () => (modal.style.display = "block");
+span.onclick = () => (modal.style.display = "none"); //closes modal on x
+
+window.onclick = e => {
+  if (e.target == modal) modal.style.display = "none";
+};
+
+// cloud shaped widget
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
