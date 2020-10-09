@@ -7,15 +7,12 @@ const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquer
 const img = document.createElement('img');
 
 // modal
-const modal = document.getElementById("dirModal");
-const modalButton = document.getElementById("modalButton");
-const span = document.getElementsByClassName("close")
-modalButton.onclick = () => (modal.style.display = "block");
-span.onclick = () => (modal.style.display = "none"); //closes modal on x
-
-window.onclick = e => {
-  if (e.target == modal) modal.style.display = "none";
-};
+const modal = document.getElementById("dirModal"); //gets modal
+const modalButton = document.getElementById("modalButton"); //button that opens modal
+const span = document.getElementsByClassName("close"); //element that closes modal
+modalButton.onclick = () =>{ modal.style.display = "block" }; //closes modal on click
+span.onclick = () => { modal.style.display = "none" }; //closes modal on x
+window.onclick = e => { if (e.target == modal) modal.style.display = "none" };
 
 // cloud shaped widget
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
