@@ -40,7 +40,9 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
           png = "2"
         } else {
           status = "Good";
-          color = "6ECD4B";
+          color = "D4E4F1";
+        // D4E4F1 - white
+        // 6ECD4B - green
           png = "1"
         };
         //assembles widget without jank or preloaded elements
@@ -98,11 +100,11 @@ d3.csv(test)
   });
 
   //use a Math.max(data.)+ some num to round it something instead of 2nd arg
-    x.domain(d3.extent(data, (d) => { 
+  x.domain(d3.extent(data, (d) => { 
       return d.date;
     }));
 
-    y.domain([0, 240]); 
+  y.domain([0, 240]); 
   
   const xaxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -136,14 +138,45 @@ d3.csv(test)
     .append("text");
 
   const showCompare = (e, d) => {
-    const year = d.year.trim();
-    if (compare[year]) {
-      compare[year] = false;
+    let year;
+    if (d.year) {
+      year = d.year.trim();
+      if (compare[year]) {
+        compare[year] = false;
+      } else {
+        compare[year] = d;
+      };
     } else {
-      compare[year] = d;
-    };
-  }; //fxn loads an object for better efficiency
+      year = e.key;
+        if (compare[year]) {
+          compare[year] = false;
+        } else {
+          compare[year] = e.values;
+        };
+      // lines.attr("d", d => { 
+      //   for (const key in compare) {
+      //     // debugger
+      //     if (compare.key) {
+      //         console.log(d)
+      //         return line(compare[key])
+      //     }}
+      //   })
+      //     .attr("stroke", d => { 
+      //       return colors(compare[year]) })
+      }
+    }
+    
+   //fxn loads an object for better efficiency
   
+  // const showButtonLine = svg.selectAll("lines")
+  //   .data(compare, d => {
+  //     console.log(compare)
+  //   })
+  //   .enter()
+  //   .append("path")
+
+
+
   //hover over dots/graph
   const showLine = (e, selectedLine) => { 
     const hoveredYear = selectedLine.year.trim();
@@ -171,24 +204,17 @@ d3.csv(test)
   };
 
   const lines = svg.selectAll("lines")
-    .data(aData, d => {
-    return {
-      year: d.key,
-      value: d.values
-    }})
+    .data(aData)
     .enter()
     .append("path")
     .attr('opacity', '1')
     .attr("stroke-width", 2)
     .attr("fill", "none");
+
       
   const dots = svg.append("g")
     .selectAll("dot")
-    .data(data, d => {
-      return {
-        date: d.date,
-      }
-    })
+    .data(data)
     .enter()
     .append("circle")
       .attr("r", 5) //radius
@@ -199,49 +225,33 @@ d3.csv(test)
     .on("click", showCompare)
     .on("mouseover", showLine);
 
+  const buttonCompare = (e, d) => {
+    
+    const year = e.key
+    if (compare[year]) {
+      compare[year] = false;
+    } else {
+      compare[year] = e;
+    };
+    lines.attr("d", d => { 
+      if (compare[d.key]) {
+        return line(d.values); // from handleclick
+      } 
+    })
+      .attr("stroke", d => { return colors(d.key) })
+
+  }
+
   const buttons = d3.select("body")
     .selectAll("input")
-    .data(aData, d => {console.log(d)})
+    .data(aData)
     .enter()
     .append("input")
-    .attr("type", "button")
-    .attr("class", "babyCloud")
-    .attr("value", d => { return d.key })
-    // .on("click", showCompare)
-
-
-
-    /////////////////////
-    // dot mouseover events - prettier than what's present
-    const infoWindow = d3.select("g")
-      .append("div")
-      .attr("class", "window")
-      .style("background-color", "black")
-      .style("padding", "2rem")
-      .style("color", "black")
-
-    const showInfo = (e, d) => {
-      // console.log(d) //mouseover data info
-      const info =
-        `Year: ${d.year} <br>
-      PM25: ${d.pm25} <br>`
-
-      // infoWindow.transition()
-      // .duration(2)
-      infoWindow.style("opacity", 1)
-        .html(infoWindow)
-        // .style("left", (d3.e.pageX) + "px")
-        // .style("top", (d3.e.pageY) + "px")
-        .style("display", "inline-block")
-    };
-
-    const hideWindow = () => {
-      infoWindow
-        // .transition()
-        // .duration(200)
-        .style("opacity", 0)
-    }
-  /////////////////
+      .attr("type", "button")
+      .attr("class", "babyCloud")
+      // .attr("", d => { return d })
+      .attr("value", d => { return d.key })
+    .on("click", buttonCompare)
 
 });
 

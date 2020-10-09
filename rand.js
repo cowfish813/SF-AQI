@@ -1,3 +1,44 @@
+//appending div
+// 
+
+
+    /////////////////////
+    // dot mouseover events - prettier than what's present
+    // const infoWindow = d3.select("g")
+    //   .append("div")
+    //   .attr("class", "window")
+    //   .style("background-color", "black")
+    //   .style("padding", "2rem")
+    //   .style("color", "black")
+
+    // const showInfo = (e, d) => {
+    //   // console.log(d) //mouseover data info
+    //   const info =
+    //     `Year: ${d.year} <br>
+    //   PM25: ${d.pm25} <br>`
+
+    //   // infoWindow.transition()
+    //   // .duration(2)
+    //   infoWindow.style("opacity", 1)
+    //     .html(infoWindow)
+    //     // .style("left", (d3.e.pageX) + "px")
+    //     // .style("top", (d3.e.pageY) + "px")
+    //     .style("display", "inline-block")
+    // };
+
+    // const hideWindow = () => {
+    //   infoWindow
+    //     // .transition()
+    //     // .duration(200)
+    //     .style("opacity", 0)
+    // }
+  /////////////////
+
+
+
+
+
+
 
 
 //v4 useless notes
