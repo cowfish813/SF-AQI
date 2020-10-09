@@ -35,12 +35,16 @@ input, button, submit {
 	margin: 1rem;
 	width: 3rem;
 	height: 2rem;
-	box-shadow: .3rem .3rem rgba(0,0,0,0.2);
 	border-radius: 1.25rem;
 	/* margin: 1rem; */
 	background-color: #D4E4F1;
+	box-shadow: .3rem .3rem rgba(0,0,0,0.2);
 }
-.babyCloud::after, .babyCloud::before {
+.babyCloud:active {
+	transform: scale(0.98);
+	/* box-shadow: 0rem 0rem rgba(0,0,0,0.0); */
+}
+/* .babyCloud::after, .babyCloud::before {
     content: "";
     position: relative;
     display: inline-block;
@@ -58,7 +62,7 @@ input, button, submit {
     height: 15.25rem;
     top: -5.7rem;
 	left: 13.5rem;
-}
+} */
 
 /* .svg {
     display: inline-block;
@@ -114,10 +118,17 @@ input, button, submit {
 }
 
 #my_dataviz {
-	margin-bottom: 1.3rem;
+	/* margin-bottom: 1.3rem; */
 }
+.svgUnit {
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+}
+
 svg {
 	width: 106%;
+	height: 40rem;
 	/* height: 105%; */
 }
 .svgGuide {
@@ -143,7 +154,7 @@ svg {
 	height: 15rem;
 	box-shadow: .8rem .8rem rgba(0,0,0,0.2);
 	border-radius: 9.25rem;
-	margin: 8rem;
+	margin: 6rem;
 }
 .cloud::after, .cloud::before {
     content: "";

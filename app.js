@@ -124,7 +124,7 @@ d3.csv(test)
     .text("Particulate Matter (PM2.5)")
 
   const xAxisLabel = svg.append("text")
-    .attr("transform", "translate(" + (width/2) + "," + (height = margin.top + 490) + ")")
+    .attr("transform", "translate(" + (width/2) + "," + (height = margin.top + 590) + ")")
     .style("text-anchor", "middle")
     .text("Month")
 
