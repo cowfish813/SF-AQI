@@ -55,7 +55,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
         document.getElementById("widget_icon").appendChild(img);
-        // document.getElementsById("cloud").style.boxShadow = ".8rem .8rem"
     } else {
       //hide that damned key
       console.log("API limit exhausted");
@@ -73,11 +72,11 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
   }));
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
-setInterval(widget, 500);
+setInterval(widget, 5000);
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1040 - margin.left - margin.right
-  height = 500 - margin.top - margin.bottom
+  height = 600 - margin.top - margin.bottom
 
 const svg = d3.select('#my_dataviz')
     .append("svg") //adds svg ele
@@ -116,6 +115,20 @@ d3.csv(test)
   .call(d3.axisLeft(y));
   // sets y axis
 
+  const yAxisLabel = svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height/2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Particulate Matter (PM2.5)")
+
+  const xAxisLabel = svg.append("text")
+    .attr("transform", "translate(" + (width/2) + "," + (height = margin.top + 490) + ")")
+    .style("text-anchor", "middle")
+    .text("Month")
+
+
   const aData = d3.nest()
     .key( d => { return d.year.trim() }) //trims empty space
     .entries(data.sort((a ,b) => (a.date - b.date)));
@@ -138,44 +151,13 @@ d3.csv(test)
     .append("text");
 
   const showCompare = (e, d) => {
-    let year;
-    if (d.year) {
-      year = d.year.trim();
+    const year = d.year.trim();
       if (compare[year]) {
         compare[year] = false;
       } else {
         compare[year] = d;
       };
-    } else {
-      year = e.key;
-        if (compare[year]) {
-          compare[year] = false;
-        } else {
-          compare[year] = e.values;
-        };
-      // lines.attr("d", d => { 
-      //   for (const key in compare) {
-      //     // debugger
-      //     if (compare.key) {
-      //         console.log(d)
-      //         return line(compare[key])
-      //     }}
-      //   })
-      //     .attr("stroke", d => { 
-      //       return colors(compare[year]) })
-      }
-    }
-    
-   //fxn loads an object for better efficiency
-  
-  // const showButtonLine = svg.selectAll("lines")
-  //   .data(compare, d => {
-  //     console.log(compare)
-  //   })
-  //   .enter()
-  //   .append("path")
-
-
+  }; //fxn loads an object for better efficiency
 
   //hover over dots/graph
   const showLine = (e, selectedLine) => { 
@@ -186,10 +168,9 @@ d3.csv(test)
       if (hoveredYear === d.key) {
         labels.attr("x", 12)
           .text(d => { return (`PM25: ${pm25}`) })
-          // .style("fill", d => { return (colors(d.year)) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
-          .style("font-size", 15)
-          // .attr('opacity', '1')
+          .style("font-size", "15")
+          // .style("z-index", "10")
           .style("opacity", "1") //need to make text appear OVER dots
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
@@ -220,38 +201,36 @@ d3.csv(test)
       .attr("r", 5) //radius
       .attr("cx", d => (x(d.date)))
       .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.15')
+      .attr('opacity', '.2')
       .style("fill", d => (colors(d.year)))
     .on("click", showCompare)
     .on("mouseover", showLine);
 
-  const buttonCompare = (e, d) => {
-    
+  const buttonCompare = (e, d) => { 
     const year = e.key
     if (compare[year]) {
       compare[year] = false;
     } else {
       compare[year] = e;
     };
+
     lines.attr("d", d => { 
       if (compare[d.key]) {
         return line(d.values); // from handleclick
-      } 
+      };
     })
-      .attr("stroke", d => { return colors(d.key) })
+      .attr("stroke", d => { return colors(d.key) });
+  };
 
-  }
-
-  const buttons = d3.select("body")
+  const buttons = d3.select("h2")
     .selectAll("input")
     .data(aData)
     .enter()
     .append("input")
       .attr("type", "button")
       .attr("class", "babyCloud")
-      // .attr("", d => { return d })
       .attr("value", d => { return d.key })
-    .on("click", buttonCompare)
-
+    .sort((a, b) => { return a.key - b.key })
+    .on("click", buttonCompare);
 });
 
