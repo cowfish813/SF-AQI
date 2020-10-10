@@ -383,22 +383,24 @@ a:active {
 	z-index: 2;
 }
 .svgGuide {
-	margin: 1rem;
+	margin: .8rem;
 }
 .modalContent {
 	background-color: #D4E4F1;
 	margin: 15% auto;
 	padding: 1.5rem;
-	/* border: 1px solid #888888; */
 	width: 25rem;
 	height: 10rem;
 	border-radius: 8rem;
-	position: relative;
+	/* position: relative; */
+	box-shadow: .8rem .8rem rgba(0,0,0,0.2);
+	animation-name: animateSide;
+	animation-duration: .4s;
+
 }
 .cloud1, .cloud2 {
     content: "";
     position: relative;
-    /* display: inline-block; */
     background: inherit;
 	border-radius: inherit;
 	z-index: -4;
@@ -406,15 +408,21 @@ a:active {
 .cloud2 {
     width: 9rem;
     height: 9rem;
-    top: -27.75rem;
+    top: -28.75rem;
 	left: 5rem;
 }
 .cloud1 {
     width: 13.25rem;
     height: 13.25rem;
-    top: -13.7rem;
+    top: -16.7rem;
 	left: 10.5rem;
 }
+
+@keyframes animateSide {
+	from {right: 300px; opacity: 0;}
+	to {top: 0; opacity: 1;}
+}
+
 
 
 .close {
