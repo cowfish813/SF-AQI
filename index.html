@@ -34,23 +34,27 @@
             <h1 class="titleName">San Francisco AQI</h1>
             <div class="tagline">
                 <button id="modalButton">Directions/Help</button>
+
                 <div id="dirModal" class="modal">
                     <div class="modalContent">
                         <span class="close">&times;</span>
-                            <p class="svgGuide">* Hover mouse over dots to view the AQI over the course of a year</p>
-                            <p class="svgGuide">* Click the dots/button to continue viewing or dismiss the line</p>
-                            <p class="svgGuide">* While it is IDEALLY not noticible now, the cloud below changes color based on current AQI. </p>
+                            <div class="getin">
+                                <li class="svgGuide"> Hover mouse over dots to view the AQI over the course of a year</li>
+                                <li class="svgGuide"> Click the dots/button to continue viewing or dismiss the line</li>
+                                <li class="svgGuide"> While it is IDEALLY not noticible now, the cloud below changes color based on current AQI. </li>
+                            </div>
+                                <!-- DO NOT ADD ANYTHING. cloud1/2 specifically for styling -->
+                            <div class="cloud1"></div> 
+                            <div class="cloud2"></div>
                     </div>
                 </div>
+
                 <!-- <p class="tinytag">measured in PM<p class="tinyText">25</p></p> -->
             </div>
             <div class="svgContainer">
                     <div id="my_dataviz">
                         <h2 class="buttonContainer"></h2>
-                    </div>   
-                <!-- <p class="svgGuide">* Hover mouse over dots to view the AQI over the course of a year</p>
-                <p class="svgGuide">* Click the dots/button to continue viewing or dismiss the line</p>
-                <p class="svgGuide">* While it is IDEALLY not noticible now, the cloud below changes color based on current AQI. </p> -->
+                    </div>
             </div>
             <div class="stats">
                 <div class="widgetGuide">
