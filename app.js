@@ -139,7 +139,7 @@ d3.csv(test)
     .style("text-anchor", "middle")
     .text("Month")
 
-
+  //sorts data and adds a new key
   const aData = d3.nest()
     .key( d => { return d.year.trim() }) //trims empty space
     .entries(data.sort((a ,b) => (a.date - b.date)));
@@ -150,6 +150,7 @@ d3.csv(test)
     .domain(years)
     .range(d3.schemeSet2);
 
+  // line compare, utilizes initialized compare object
   const line = d3.line()
     .x(d => { return x(d.date)})
     .y(d => { return y(d.pm25)});
@@ -217,6 +218,8 @@ d3.csv(test)
     .on("click", showCompare)
     .on("mouseover", showLine);
 
+
+  // buttom compare, still uses the same compare object initialized earlier
   const buttonCompare = (e, d) => { 
     const year = e.key
     if (compare[year]) {
@@ -243,5 +246,41 @@ d3.csv(test)
       .attr("value", d => { return d.key })
     .sort((a, b) => { return a.key - b.key })
     .on("click", buttonCompare);
+
+  // zooming
+  // const clip = svg
+  //   .append("defs")
+  //   .append("svg:clipPath")
+  //   .attr("id", "clip")
+  //   .append("svg:rect")
+  //   .attr("width", width)
+  //   .attr("height", height)
+  //   .attr("x", 0)
+  //   .attr("y", 0);
+  
+  // const updateChart = () => {
+  //   const newX = d3.event.transform.rescaleX(x);
+  //   const newY = d3.event.transform.rescaleY(y);
+    
+  //   xaxis.call(d3.axisBottom(newX));
+  //   yaxis.call(d3.axisLeft(newY));
+    
+  //   dots
+  //   .selectAll("dot")
+  //   .attr("cx", d => { return newX(d.date) })
+  //   .attr("cy", d => { return newY(d.pm25) })
+  // };
+  // const zoom = d3.zoom()
+  //   .scaleExtent([.5, 20]) //
+  //   .extent([[0, 0], [width, height]])
+  //   .on("zoom", updateChart);
+
+  // const recoverPoint = svg.append("rect")
+  //   .attr("width", width)
+  //   .attr("height", height)
+  //   .style("fill", "none")
+  //   .style("pointer-events", "all")
+  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+  //   .call(zoom);
 });
 
