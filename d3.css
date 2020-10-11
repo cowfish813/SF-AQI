@@ -13,7 +13,7 @@ body {
 .titleName {
 	font-size: 3rem;
 	color: #D4E4F1;
-	margin: 1rem;
+	/* margin: 1rem; */
 }
 
 input, button, submit {
@@ -89,7 +89,7 @@ input, button, submit {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-bottom: 2rem;
+	/* margin-bottom: 2rem; */
 }
 
 .left {
@@ -128,7 +128,7 @@ input, button, submit {
 
 svg {
 	width: 106%;
-	height: 40rem;
+	height: 33rem;
 	/* height: 105%; */
 }
 .svgGuide {

@@ -1,3 +1,4 @@
+
 // require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
@@ -87,7 +88,7 @@ setInterval(widget, 5000);
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1040 - margin.left - margin.right
-  height = 600 - margin.top - margin.bottom
+  height = 500 - margin.top - margin.bottom
 
 const svg = d3.select('#my_dataviz')
     .append("svg") //adds svg ele
@@ -116,13 +117,13 @@ d3.csv(test)
 
   y.domain([0, 240]); 
   
-  const xaxis = svg.append("g")
+  const xAxis = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b"))) 
     //tickformat debugs calendar
     //sets x axis
   
-  const yaxis = svg.append("g")
+  const yAxis = svg.append("g")
   .call(d3.axisLeft(y));
   // sets y axis
 
@@ -134,8 +135,8 @@ d3.csv(test)
     .style("text-anchor", "middle")
     .text("Particulate Matter (PM2.5)")
 
-  const xAxisLabel = svg.append("text")
-    .attr("transform", "translate(" + (width/2) + "," + (height = margin.top + 590) + ")")
+  const xAxisLabel = svg.append("text") //adjust location of xaxis
+    .attr("transform", "translate(" + (width/2) + "," + (height = margin.top + 490) + ")")
     .style("text-anchor", "middle")
     .text("Month")
 
@@ -244,43 +245,44 @@ d3.csv(test)
       .attr("type", "button")
       .attr("class", "babyCloud")
       .attr("value", d => { return d.key })
-    .sort((a, b) => { return a.key - b.key })
+    .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
     .on("click", buttonCompare);
 
   // zooming
-  // const clip = svg
-  //   .append("defs")
-  //   .append("svg:clipPath")
-  //   .attr("id", "clip")
-  //   .append("svg:rect")
-  //   .attr("width", width)
-  //   .attr("height", height)
-  //   .attr("x", 0)
-  //   .attr("y", 0);
+  const clip = svg
+    .append("defs")
+    .append("svg:clipPath")
+    .attr("id", "clip")
+    .append("svg:rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("x", 0)
+    .attr("y", 0);
   
-  // const updateChart = () => {
-  //   const newX = d3.event.transform.rescaleX(x);
-  //   const newY = d3.event.transform.rescaleY(y);
+  const updateChart = () => {
+    const newX = d3.event.transform.rescaleX(x);
+    const newY = d3.event.transform.rescaleY(y);
     
-  //   xaxis.call(d3.axisBottom(newX));
-  //   yaxis.call(d3.axisLeft(newY));
+    xAxis.call(d3.axisBottom(newX));
+    yAxis.call(d3.axisLeft(newY));
     
-  //   dots
-  //   .selectAll("dot")
-  //   .attr("cx", d => { return newX(d.date) })
-  //   .attr("cy", d => { return newY(d.pm25) })
-  // };
-  // const zoom = d3.zoom()
-  //   .scaleExtent([.5, 20]) //
-  //   .extent([[0, 0], [width, height]])
-  //   .on("zoom", updateChart);
+    dots
+    .selectAll("dot")
+    .attr("cx", d => { return newX(d.date) })
+    .attr("cy", d => { return newY(d.pm25) })
+  };
+  const zoom = d3.zoom()
+    .scaleExtent([1, 10]) //
+    .extent([[0, 0], [width, height]])
+    .on("zoom", updateChart);
 
-  // const recoverPoint = svg.append("rect")
-  //   .attr("width", width)
-  //   .attr("height", height)
-  //   .style("fill", "none")
-  //   .style("pointer-events", "all")
-  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-  //   .call(zoom);
+  const recoverPoint = svg
+    .append("rect")
+    // .attr("width", width + 10)
+    .attr("height", height)
+    .style("fill", "none")
+    .style("pointer-events", "all")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .call(zoom);
 });
 
