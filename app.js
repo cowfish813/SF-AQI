@@ -90,17 +90,18 @@ const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1040 - margin.left - margin.right
   height = 500 - margin.top - margin.bottom
 
-const svg = d3.select('#my_dataviz')
+const svg = d3.select('#my_dataviz') //adds svg obj to page
     .append("svg") //adds svg ele
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g")
+    .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
       
 const parseTime = d3.timeParse(`%m/%d`);
 const y = d3.scaleLinear().range([height, 0]);
 const x = d3.scaleTime().range([0, width]);
 const compare = {};
+const dotCompare = {};
 
 d3.csv(test)
   .then((data) => {
@@ -208,16 +209,25 @@ d3.csv(test)
       
   const dots = svg.append("g")
     .selectAll("dot")
-    .data(data)
+    .data(aData)
     .enter()
     .append("circle")
       .attr("r", 5) //radius
-      .attr("cx", d => (x(d.date)))
-      .attr("cy", d => (y(d.pm25)))
-      .attr('opacity', '.2')
-      .style("fill", d => (colors(d.year)))
-    .on("click", showCompare)
-    .on("mouseover", showLine);
+  //     .attr("cx", d => (x(d.date)))
+  //     .attr("cy", d => (y(d.pm25)))
+  //     .attr('opacity', '.2')
+  //     .style("fill", d => (colors(d.year)))
+  //   .on("click", showCompare)
+  //   .on("mouseover", showLine);
+
+    //dot buttons
+  const dotButtonsCompare = (e, d) => {
+    const year = e.
+
+    const buttons = d3.select("h3")
+  }
+  
+  
 
 
   // buttom compare, still uses the same compare object initialized earlier
@@ -248,6 +258,7 @@ d3.csv(test)
     .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
     .on("click", buttonCompare);
 
+
   // zooming
   const clip = svg
     .append("defs")
@@ -260,17 +271,20 @@ d3.csv(test)
     .attr("y", 0);
   
   const updateChart = () => {
+    //recover new scale
     const newX = d3.event.transform.rescaleX(x);
     const newY = d3.event.transform.rescaleY(y);
     
+    //update scale
     xAxis.call(d3.axisBottom(newX));
     yAxis.call(d3.axisLeft(newY));
     
-    dots
-    .selectAll("dot")
-    .attr("cx", d => { return newX(d.date) })
-    .attr("cy", d => { return newY(d.pm25) })
+    //update position
+    dots.selectAll("dot")
+      .attr("cx", d => { return newX(d.date) })
+      .attr("cy", d => { return newY(d.pm25) });
   };
+  
   const zoom = d3.zoom()
     .scaleExtent([1, 10]) //
     .extent([[0, 0], [width, height]])
@@ -278,7 +292,7 @@ d3.csv(test)
 
   const recoverPoint = svg
     .append("rect")
-    // .attr("width", width + 10)
+    // .attr("width", width) //why this no work!?
     .attr("height", height)
     .style("fill", "none")
     .style("pointer-events", "all")
