@@ -209,23 +209,53 @@ d3.csv(test)
       
   const dots = svg.append("g")
     .selectAll("dot")
-    .data(aData)
+    .data(data)
     .enter()
     .append("circle")
-      .attr("r", 5) //radius
-  //     .attr("cx", d => (x(d.date)))
-  //     .attr("cy", d => (y(d.pm25)))
-  //     .attr('opacity', '.2')
-  //     .style("fill", d => (colors(d.year)))
-  //   .on("click", showCompare)
-  //   .on("mouseover", showLine);
+    .on("click", showCompare)
+    .on("mouseover", showLine)
+    .attr("r", 5) //radius
+    .attr("cx", d => {
+      
+      return (x(d.date))})
+    .attr("cy", d => (y(d.pm25)))
+    .attr('opacity', '.2')
+    .style("fill", d => (colors(d.year)))
 
     //dot buttons
-  const dotButtonsCompare = (e, d) => {
-    const year = e.
+  // const dotButtonsCompare = (e, d) => {
+  //   const year = e.key;
+  //   if (dotCompare[year]) {
+  //     dotCompare[year] = false;
+  //   } else {
+  //     dotCompare[year] = e;
+  //   };
+  //   // debugger
+  //   if (dotCompare[year]) {
+  //     dots
+  //       .attr("r", 5) //radius
+  //       .attr("cx", d => {
+  //         debugger
 
-    const buttons = d3.select("h3")
-  }
+  //        return (x(d.date))})
+  //       .attr("cy", d => (y(d.pm25)))
+  //       .attr('opacity', '.2')
+  //       .style("fill", d => (colors(d.year)))
+  //       .on("click", showCompare)
+  //       .on("mouseover", showLine);
+  //   }
+  // };
+
+  // const dotButtons = d3.select("h3")
+  //   .selectAll("input")
+  //   .data(aData)
+  //   .enter()
+  //   .append("input")
+  //   .attr("type", "button")
+  //   .attr("class", "babyCloud")
+  //   .attr("value", d => { return d.key })
+  //   .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
+  //   .on("click", dotButtonsCompare);
   
   
 
