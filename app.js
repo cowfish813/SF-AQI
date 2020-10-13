@@ -206,7 +206,7 @@ d3.csv(test)
     .attr("stroke-width", 2)
     .attr("fill", "none");
 
-      
+      // RE-ENABLE FOR PRODUCTION CODE
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -216,13 +216,28 @@ d3.csv(test)
     .on("mouseover", showLine)
     .attr("r", 5) //radius
     .attr("cx", d => {
-      
       return (x(d.date))})
     .attr("cy", d => (y(d.pm25)))
     .attr('opacity', '.2')
     .style("fill", d => (colors(d.year)))
 
-    //dot buttons
+// WORKING ON INDIVIDUAL DOTS HERE. TURN THEM OFF VIA YEAR
+  // const dots = svg.append("g")
+  //   .selectAll("dot")
+  //   .data(data)
+  //   .enter()
+  //   .append("circle")
+  //   .on("click", showCompare)
+  //   .on("mouseover", showLine)
+  //   .attr("r", 5) //radius
+  //   .attr("cx", d => {
+  //     // debugger
+  //     return (x(d.date))})
+  //   .attr("cy", d => (y(d.pm25)))
+  //   .attr('opacity', '0')
+  //   .style("fill", d => (colors(d.year)))
+
+  //   //dot buttons
   // const dotButtonsCompare = (e, d) => {
   //   const year = e.key;
   //   if (dotCompare[year]) {
@@ -231,18 +246,15 @@ d3.csv(test)
   //     dotCompare[year] = e;
   //   };
   //   // debugger
-  //   if (dotCompare[year]) {
+  //   if (dotCompare[year] === d[" year"]) {
   //     dots
-  //       .attr("r", 5) //radius
   //       .attr("cx", d => {
-  //         debugger
-
-  //        return (x(d.date))})
+  //         // debugger
+  //         return (x(d.date))
+  //       })
   //       .attr("cy", d => (y(d.pm25)))
-  //       .attr('opacity', '.2')
+  //       .attr('opacity', '0')
   //       .style("fill", d => (colors(d.year)))
-  //       .on("click", showCompare)
-  //       .on("mouseover", showLine);
   //   }
   // };
 
