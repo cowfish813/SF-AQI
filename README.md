@@ -1,6 +1,6 @@
 **San Francisco Air Quality Index**
 
-Live Site [Live Site] (https://cowfish813.github.io/D3.js/)
+Live Site [Live Site](https://cowfish813.github.io/D3.js/)
 
 With the recent wildfires and other contributing factors to global warming, I found myself spending a lot more time on places like Purpleair.com. 
 I built this app with a curiosity on how our changing climate is affecting how we live in the bay area and California as a whole and to have a webpage run necessary information to me that would not tax a slow computer's CPU.
