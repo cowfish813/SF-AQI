@@ -7,11 +7,11 @@ I built this app with a curiosity on how our changing climate is affecting how w
 
 These events are not normal and I wanted to visualize it over the years as well as track live readings of San Francisco's AQI as provided by https://aqicn.org and their sensors across the city. Each Sensor has a different API endpoint that are utilized with a secret token as follows.
 ```
-`https://api.waqi.info/feed/${Sensor Location}`/?token={Unique Token ID}
+https://api.waqi.info/feed/${Sensor Location}`/?token={Unique Token ID}
 ```
 
 
-The Following snippet shows how I was able to organize the buttons which allows users to view the chart based on 
+The Following snippet shows how I was able to organize the buttons which allows users to view the chart based on the earliest recorded year for this sensor
 ```
   const buttonCompare = (e, d) => { 
     const year = e.key
@@ -40,8 +40,44 @@ The Following snippet shows how I was able to organize the buttons which allows 
     .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
     .on("click", buttonCompare);
 ```
+![char with buttons](https://raw.githubusercontent.com/cowfish813/SF-AQI/master/readme%20assets/Screen%20Shot%202020-10-13%20at%203.45.09%20PM.png)
 
 
+The following code shows some of the interactivity users have over the graph as they hover. Users will see the path of the dots through the year as well as the PM2.5 levels
+```
+  const showLine = (e, selectedLine) => { 
+    const hoveredYear = selectedLine.year.trim();
+    const pm25 = selectedLine.pm25;
+
+    lines.attr("d", d => {
+      if (hoveredYear === d.key) {
+        labels.attr("x", 12)
+          .text(d => { return (`PM25: ${pm25}`) })
+          .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
+          .style("font-size", "15")
+          // .style("z-index", "10")
+          .style("opacity", "1") //need to make text appear OVER dots
+          .attr("transform",
+            ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
+          );
+        return line(d.values);
+      }
+      if (compare[d.key]) {
+        return line(d.values); // from handleclick
+      }
+    })
+    .attr("stroke", d => { return colors(d.key) })
+  };
+
+  const lines = svg.selectAll("lines")
+    .data(aData)
+    .enter()
+    .append("path")
+    .attr('opacity', '1')
+    .attr("stroke-width", 2)
+    .attr("fill", "none");
+```
+![chart graph](https://raw.githubusercontent.com/cowfish813/SF-AQI/master/readme%20assets/Screen%20Shot%202020-10-13%20at%203.43.22%20PM.png)
 
 
 
