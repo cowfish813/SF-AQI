@@ -126,8 +126,8 @@ The application is able to call this function every 5 minutes and update without
 ```
 Shows how I was able to draw a cloud entirely from CSS and 1 div in HTML. The cloud carries another div that houses the content from the promises in "widget".
 
-![haz](readme assets/Screen Shot 2020-10-12 at 5.59.24 PM.png)
-![good](readme assets/Screen Shot 2020-10-12 at 5.59.28 PM.png)
+![haz](https://raw.githubusercontent.com/cowfish813/SF-AQI/master/readme%20assets/Screen%20Shot%202020-10-12%20at%205.59.24%20PM.png)
+![good](https://raw.githubusercontent.com/cowfish813/SF-AQI/master/readme%20assets/Screen%20Shot%202020-10-12%20at%205.59.28%20PM.png)
 
 Future additions
     * AQI forecasts
