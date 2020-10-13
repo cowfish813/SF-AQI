@@ -17,6 +17,8 @@ window.onclick = e => {
   // debugger
   if (e.target == modal) modal.style.display = "none" };
 
+window.scrollTo(0, 0)
+
 // cloud shaped widget
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
