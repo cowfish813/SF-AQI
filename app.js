@@ -17,7 +17,7 @@ window.onclick = e => {
   // debugger
   if (e.target == modal) modal.style.display = "none" };
 
-window.scrollTo(0, 0)
+// window.scrollTo(0, 0)
 
 // cloud shaped widget
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
@@ -226,7 +226,7 @@ d3.csv(test)
 // WORKING ON INDIVIDUAL DOTS HERE. TURN THEM OFF VIA YEAR
   // const dots = svg.append("g")
   //   .selectAll("dot")
-  //   .data(data)
+  //   .data(aData)
   //   .enter()
   //   .append("circle")
   //   .on("click", showCompare)
@@ -270,11 +270,8 @@ d3.csv(test)
   //   .attr("value", d => { return d.key })
   //   .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
   //   .on("click", dotButtonsCompare);
-  
-  
 
-
-  // buttom compare, still uses the same compare object initialized earlier
+  // // buttom compare, still uses the same compare object initialized earlier
   const buttonCompare = (e, d) => { 
     const year = e.key
     if (compare[year]) {
