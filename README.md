@@ -10,6 +10,41 @@ These events are not normal and I wanted to visualize it over the years as well 
 `https://api.waqi.info/feed/${Sensor Location}`/?token={Unique Token ID}
 ```
 
+
+The Following snippet shows how I was able to organize the buttons which allows users to view the chart based on 
+```
+  const buttonCompare = (e, d) => { 
+    const year = e.key
+    if (compare[year]) {
+      compare[year] = false;
+    } else {
+      compare[year] = e;
+    };
+
+    lines.attr("d", d => { 
+      if (compare[d.key]) {
+        return line(d.values); // from handleclick
+      };
+    })
+      .attr("stroke", d => { return colors(d.key) });
+  };
+
+  const buttons = d3.select("h2")
+    .selectAll("input")
+    .data(aData)
+    .enter()
+    .append("input")
+      .attr("type", "button")
+      .attr("class", "babyCloud")
+      .attr("value", d => { return d.key })
+    .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
+    .on("click", buttonCompare);
+```
+
+
+
+
+
 The functional components involved with making the live update are utilized as follows
 ```
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
