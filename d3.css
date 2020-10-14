@@ -369,7 +369,7 @@ a:active {
 
 /* MODAL CSS */
 .modal {
-	/* display: none; */
+	display: none;
 	position: fixed;
 	z-index: 3;
 	left: 0;
