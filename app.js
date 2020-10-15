@@ -156,8 +156,8 @@ d3.csv(test)
 
   // line compare, utilizes initialized compare object
   const line = d3.line()
-    .x(d => { return x(d.date)})
-    .y(d => { return y(d.pm25)});
+    .x(d => { return x(d.date) })
+    .y(d => { return y(d.pm25) });
 
   const labels = svg
     .selectAll("labels")
@@ -209,6 +209,21 @@ d3.csv(test)
     .attr("fill", "none");
 
       // RE-ENABLE FOR PRODUCTION CODE
+  // const dots = svg.append("g")
+  //   .selectAll("dot")
+  //   .data(data)
+  //   .enter()
+  //   .append("circle")
+  //   .on("click", showCompare)
+  //   .on("mouseover", showLine)
+  //   .attr("r", 5) //radius
+  //   .attr("cx", d => {
+  //     return (x(d.date))})
+  //   .attr("cy", d => (y(d.pm25)))
+  //   .attr('opacity', '.2')
+  //   .style("fill", d => (colors(d.year)))
+
+// WORKING ON INDIVIDUAL DOTS HERE. TURN THEM OFF VIA YEAR
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -216,60 +231,39 @@ d3.csv(test)
     .append("circle")
     .on("click", showCompare)
     .on("mouseover", showLine)
-    .attr("r", 5) //radius
-    .attr("cx", d => {
-      return (x(d.date))})
-    .attr("cy", d => (y(d.pm25)))
-    .attr('opacity', '.2')
-    .style("fill", d => (colors(d.year)))
 
-// WORKING ON INDIVIDUAL DOTS HERE. TURN THEM OFF VIA YEAR
-  // const dots = svg.append("g")
-  //   .selectAll("dot")
-  //   .data(aData)
-  //   .enter()
-  //   .append("circle")
-  //   .on("click", showCompare)
-  //   .on("mouseover", showLine)
-  //   .attr("r", 5) //radius
-  //   .attr("cx", d => {
-  //     // debugger
-  //     return (x(d.date))})
-  //   .attr("cy", d => (y(d.pm25)))
-  //   .attr('opacity', '0')
-  //   .style("fill", d => (colors(d.year)))
+  const dotButtonsCompare = (e, d) => {
+    const year = e.key;
+    if (dotCompare[year]) {
+      dotCompare[year] = false;
+    } else {
+      dotCompare[year] = e;
+    };
 
-  //   //dot buttons
-  // const dotButtonsCompare = (e, d) => {
-  //   const year = e.key;
-  //   if (dotCompare[year]) {
-  //     dotCompare[year] = false;
-  //   } else {
-  //     dotCompare[year] = e;
-  //   };
-  //   // debugger
-  //   if (dotCompare[year] === d[" year"]) {
-  //     dots
-  //       .attr("cx", d => {
-  //         // debugger
-  //         return (x(d.date))
-  //       })
-  //       .attr("cy", d => (y(d.pm25)))
-  //       .attr('opacity', '0')
-  //       .style("fill", d => (colors(d.year)))
-  //   }
-  // };
+    ///uses data
+      dots
+      .attr("r", 5) //radius
+        .attr("cx", d => {
+          if (dotCompare[d.year.trim()]) return x(d.date)
+        })
+        .attr("cy", d => {       
+          if (dotCompare[d.year.trim()]) return y(d.pm25)})
+        .attr('opacity', '.4')
+        .style("fill", d => (colors(d.year)))
 
-  // const dotButtons = d3.select("h3")
-  //   .selectAll("input")
-  //   .data(aData)
-  //   .enter()
-  //   .append("input")
-  //   .attr("type", "button")
-  //   .attr("class", "babyCloud")
-  //   .attr("value", d => { return d.key })
-  //   .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
-  //   .on("click", dotButtonsCompare);
+  };
+
+
+  const dotButtons = d3.select("h3")
+    .selectAll("input")
+    .data(aData)
+    .enter()
+    .append("input")
+    .attr("type", "button")
+    .attr("class", "babyCloud")
+    .attr("value", d => { return d.key })
+    .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
+    .on("click", dotButtonsCompare);
 
   // // buttom compare, still uses the same compare object initialized earlier
   const buttonCompare = (e, d) => { 
