@@ -266,32 +266,32 @@ d3.csv(test)
   //   .on("click", dotButtonsCompare);
 
   // // // buttom compare, still uses the same compare object initialized earlier
-  // const buttonCompare = (e, d) => { 
-  //   const year = e.key
-  //   if (compare[year]) {
-  //     compare[year] = false;
-  //   } else {
-  //     compare[year] = e;
-  //   };
+  const buttonCompare = (e, d) => { 
+    const year = e.key
+    if (compare[year]) {
+      compare[year] = false;
+    } else {
+      compare[year] = e;
+    };
 
-  //   lines.attr("d", d => { 
-  //     if (compare[d.key]) {
-  //       return line(d.values); // from handleclick
-  //     };
-  //   })
-  //     .attr("stroke", d => { return colors(d.key) });
-  // };
+    lines.attr("d", d => { 
+      if (compare[d.key]) {
+        return line(d.values); // from handleclick
+      };
+    })
+      .attr("stroke", d => { return colors(d.key) });
+  };
 
-  // const buttons = d3.select("h2")
-  //   .selectAll("input")
-  //   .data(aData)
-  //   .enter()
-  //   .append("input")
-  //     .attr("type", "button")
-  //     .attr("class", "babyCloud")
-  //     .attr("value", d => { return d.key })
-  //   .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
-  //   .on("click", buttonCompare);
+  const buttons = d3.select("h2")
+    .selectAll("input")
+    .data(aData)
+    .enter()
+    .append("input")
+      .attr("type", "button")
+      .attr("class", "babyCloud")
+      .attr("value", d => { return d.key })
+    .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
+    .on("click", buttonCompare);
 
 
   // zooming
