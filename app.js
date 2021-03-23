@@ -1,5 +1,3 @@
-
-// require('dotenv').config()
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
 const data = {};
@@ -14,7 +12,6 @@ const span = document.getElementsByClassName("close"); //element that closes mod
 modalButton.onclick = () =>{ modal.style.display = "block" }; //closes modal on click
 span.onclick = () => { modal.style.display = "none" }; //closes modal on x
 window.onclick = e => { 
-  // debugger
   if (e.target == modal) modal.style.display = "none" };
 
 // window.scrollTo(0, 0)
@@ -73,14 +70,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       //hide that damned key
       console.log("API limit exhausted");
     };
-
-    // console.log(res.data.forecast.daily.pm25[0].avg)
   })
-  // .then(res => { //forecast
-  //   debugger
-  //   console.log(res.data.forecast.daily.pm25)
-  //   // console.log(res.data.forecast.daily)
-  // })
   .catch(err => {
     console.log(err);
   }));
@@ -223,49 +213,6 @@ d3.csv(test)
     .attr('opacity', '.2')
     .style("fill", d => (colors(d.year)))
 
-// WORKING ON INDIVIDUAL DOTS HERE. TURN THEM OFF VIA YEAR
-  // const dots = svg.append("g")
-  //   .selectAll("dot")
-  //   .data(data)
-  //   .enter()
-  //   .append("circle")
-  //   .on("click", showCompare)
-  //   .on("mouseover", showLine)
-
-  // const dotButtonsCompare = (e, d) => {
-  //   const year = e.key;
-  //   if (dotCompare[year]) {
-  //     dotCompare[year] = false;
-  //   } else {
-  //     dotCompare[year] = e;
-  //   };
-
-  //   ///uses data
-  //     dots
-  //     .attr("r", 5) //radius
-  //       .attr("cx", d => {
-  //         if (dotCompare[d.year.trim()]) return x(d.date)
-  //       })
-  //       .attr("cy", d => {       
-  //         if (dotCompare[d.year.trim()]) return y(d.pm25)})
-  //       .attr('opacity', '.4')
-  //       .style("fill", d => (colors(d.year)))
-
-  // };
-
-
-  // const dotButtons = d3.select("h3")
-  //   .selectAll("input")
-  //   .data(aData)
-  //   .enter()
-  //   .append("input")
-  //   .attr("type", "button")
-  //   .attr("class", "babyCloud")
-  //   .attr("value", d => { return d.key })
-  //   .sort((a, b) => { return a.key - b.key }) //buttons are ordered this way
-  //   .on("click", dotButtonsCompare);
-
-  // // // buttom compare, still uses the same compare object initialized earlier
   const buttonCompare = (e, d) => { 
     const year = e.key
     if (compare[year]) {
@@ -327,7 +274,6 @@ d3.csv(test)
 
   const recoverPoint = svg
     .append("rect")
-    // .attr("width", width) //why this no work!?
     .attr("height", height)
     .style("fill", "none")
     .style("pointer-events", "all")
