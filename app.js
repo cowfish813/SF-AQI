@@ -17,7 +17,7 @@ window.onclick = e => {
 // window.scrollTo(0, 0)
 
 // cloud shaped widget
-const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
+const widget = () => (fetc45h(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
     // completes first widget
@@ -67,7 +67,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("city").innerHTML = data.data.city.name;
         document.getElementById("widget_icon").appendChild(img);
     } else {
-      //hide that damned key
       console.log("API limit exhausted");
     };
   })
