@@ -17,7 +17,7 @@ window.onclick = e => {
 // window.scrollTo(0, 0)
 
 // cloud shaped widget
-const widget = () => (fetc45h(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
+const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
   .then(res => {
     // completes first widget
