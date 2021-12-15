@@ -2,7 +2,7 @@ const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20f
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
 const data = {};
 const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv";
-const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3"; //how to without jquery/react?
+const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3";
 const img = document.createElement('img');
 
 // modal
@@ -14,7 +14,6 @@ span.onclick = () => { modal.style.display = "none" }; //closes modal on x
 window.onclick = e => { 
   if (e.target == modal) modal.style.display = "none" };
 
-// window.scrollTo(0, 0)
 
 // cloud shaped widget
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
