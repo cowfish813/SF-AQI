@@ -171,7 +171,6 @@ svg {
 .cloud{ 
 	width: 31.85rem;
 	height: 15rem;
-	box-shadow: .8rem .8rem rgba(0,0,0,0.2);
 	border-radius: 9.25rem;
 	margin: 6rem;
 }

@@ -11,8 +11,7 @@ const modalButton = document.getElementById("modalButton"); //button that opens 
 const span = document.getElementsByClassName("close"); //element that closes modal
 modalButton.onclick = () =>{ modal.style.display = "block" }; //closes modal on click
 span.onclick = () => { modal.style.display = "none" }; //closes modal on x
-window.onclick = e => { 
-  if (e.target == modal) modal.style.display = "none" };
+window.onclick = e => { if (e.target == modal) modal.style.display = "none" };
 
 
 // cloud shaped widget
@@ -65,6 +64,8 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         document.getElementById("sensor_site").innerHTML = "Sensor Location:";
         document.getElementById("city").innerHTML = data.data.city.name;
         document.getElementById("widget_icon").appendChild(img);
+        document.getElementsByClassName('cloud')[0].style.boxShadow = '.8rem .8rem rgba(0, 0, 0, 0.2)';
+        
     } else {
       console.log("API limit exhausted");
     };
