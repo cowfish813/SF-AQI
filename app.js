@@ -1,7 +1,9 @@
 const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv";
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
 const data = {};
-const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv";
+
+const newSF = './csv files/san-francisco-arkansas street, san francisco, california-air-quality.csv'
+const test = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20files/san-francisco%2C%20california%2C%20usa-air-quality.csv"; //current test
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3";
 const img = document.createElement('img');
 
