@@ -139,7 +139,7 @@ d3.csv(sf2021)
     .entries(data.sort((a ,b) => (a.date - b.date)));
     // groups data into years by issuing a key
   const years = aData.map(d => d.key); //array of years
-  debugger
+
   const colors = d3.scaleOrdinal()
     .domain(years)
     .range(d3.schemeSet2);
