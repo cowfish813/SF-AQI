@@ -1,5 +1,5 @@
 body {
-	background-color:grey;
+	background-color: #1372CA;
 	background-image: url("./assets/884849.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -13,7 +13,6 @@ body {
 .titleName {
 	font-size: 3rem;
 	color: #D4E4F1;
-	/* margin: 1rem; */
 }
 
 input, button, submit {
@@ -28,7 +27,6 @@ input, button, submit {
 .buttonContainer {
 	display: flex;
 	justify-content: center;
-	/* justify-content: space-evenly; */
 }
 
 .babyCloud {
@@ -36,49 +34,12 @@ input, button, submit {
 	width: 3rem;
 	height: 2rem;
 	border-radius: 1.25rem;
-	/* margin: 1rem; */
 	background-color: #D4E4F1;
 	box-shadow: .3rem .3rem rgba(0,0,0,0.2);
 }
 .babyCloud:active {
 	transform: scale(0.98);
-	/* box-shadow: 0rem 0rem rgba(0,0,0,0.0); */
 }
-/* .babyCloud::after, .babyCloud::before {
-    content: "";
-    position: relative;
-    display: inline-block;
-    background: inherit;
-    border-radius: inherit;
-}
-.babyCloud::after {
-    width: 12.25rem;
-    height: 12.25rem;
-    top: -6.75rem;
-	right: 10rem;
-}
-.babyCloud::before {
-    width: 15.25rem;
-    height: 15.25rem;
-    top: -5.7rem;
-	left: 13.5rem;
-} */
-
-/* .svg {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    vertical-align: top;
-    overflow: hidden;
-}
-.svg {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-} */
-
 
 .body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -89,11 +50,6 @@ input, button, submit {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	/* margin-bottom: 2rem; */
-}
-
-.left {
-
 }
 
 .icon {
@@ -154,9 +110,7 @@ svg {
 	margin-left: 2rem;
 	font-size: .85rem;
 }
-.APIwidget span {
-	/* margin-bottom: 1rem; */
-}
+
 .widgetContent{
 	display: flex;
 	align-items: center;
