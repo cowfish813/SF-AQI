@@ -81,7 +81,7 @@ The following code shows some of the interactivity users have over the graph as 
 
 
 
-The functional components involved with making the live update are utilized as follows
+The functional components, now updated with async/await, and involved with making the live update are utilized as follows
 ```
 const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
   .then(res => (res.json()))
@@ -138,6 +138,69 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
     console.log(err);
   }));
 ```
+
+Updated Version
+```
+const widget = async () => {
+  const response =  await fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`);
+  const res = await response.json();
+
+  const formCloud = () => {
+    if (res.status === 'ok') {
+      for (let key in res) {
+        data[key] = res[key];
+      };
+      const aqi = data.data.aqi;
+      let status = "";
+      let color = "";
+      let png = ""
+      
+      if (aqi > 300) {
+          status = "Hazardous";
+          color ="8D3D3C";
+          png = "6"
+        } else if (aqi > 200) {
+          status = "Very Unhealthy";
+          color ="A83E85";
+          png = "5"
+        } else if (aqi > 151) {
+          status = "Unhealthy";
+          color = "E52224";
+          png = "4"
+        } else if (aqi > 100) {
+          status = "USG";
+          color = "FA7430";
+          png = "3"
+        } else if (aqi > 50) {
+          status = "Moderate";
+          color = "FFDD3B";
+          png = "2"
+        } else {
+          status = "Good";
+          color = "D4E4F1";
+          png = "1"
+        };
+        //assembles widget without jank or preloaded elements
+            //appends HTML elements to the DOM for efficient loading
+        img.src =`./assets/aqi/${png}.png`;
+        document.getElementById("aqi_widget").style.backgroundColor = color;
+        document.getElementById("title_conditions").innerHTML = "Conditions Today";
+        document.getElementById("status").innerHTML = status;
+        document.getElementById("aqi").innerHTML = aqi;
+        document.getElementById("sensor_site").innerHTML = "Sensor Location:";
+        document.getElementById("city").innerHTML = data.data.city.name;
+        document.getElementById("widget_icon").appendChild(img);
+        document.getElementsByClassName('cloud')[0].style.boxShadow = '.8rem .8rem rgba(0, 0, 0, 0.2)';
+        
+    } else {
+      console.log("API limit exhausted");
+    };
+  }
+  
+  await formCloud();
+}
+```
+
 
 "fetch" returns a promise that I can extract additonal data from including forecasts, current AQI and its associated information like ozone, PM2.5, PM10, bugs, and sensor location. I dynamically assembeled the functional widget entirely with CSS and promises.
 The application is able to call this function every 5 minutes and update without having to reload the widget or entire webpage.
