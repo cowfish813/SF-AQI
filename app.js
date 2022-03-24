@@ -21,7 +21,7 @@ const widget = async () => {
   const res = await response.json();
 
   const formCloud = () => {
-    if (res) {
+    if (res.status === 'ok') {
       for (let key in res) {
         data[key] = res[key];
       };
@@ -53,8 +53,6 @@ const widget = async () => {
         } else {
           status = "Good";
           color = "D4E4F1";
-        // D4E4F1 - white
-        // 6ECD4B - green
           png = "1"
         };
         //assembles widget without jank or preloaded elements
