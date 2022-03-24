@@ -17,8 +17,7 @@ window.onclick = e => { if (e.target == modal) modal.style.display = "none" };
 
 // cloud shaped widget
 const widget = async () => {
-  const response =  await fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`);
-  const res = await response.json();
+  const res =  await (await fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)).json();
 
   const formCloud = () => {
     if (res) {
@@ -29,6 +28,7 @@ const widget = async () => {
       let status = "";
       let color = "";
       let png = ""
+
       if (aqi > 300) {
           status = "Hazardous";
           color ="8D3D3C";
