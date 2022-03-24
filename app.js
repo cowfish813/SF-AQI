@@ -16,11 +16,12 @@ window.onclick = e => { if (e.target == modal) modal.style.display = "none" };
 
 
 // cloud shaped widget
-const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`)
-  .then(res => (res.json()))
-  .then(res => {
-    // completes first widget
-    if (res) {
+const widget = async () => {
+  const response =  await fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${token}`);
+  const res = await response.json();
+
+  const formCloud = () => {
+    if (res.status === 'ok') {
       for (let key in res) {
         data[key] = res[key];
       };
@@ -28,6 +29,7 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
       let status = "";
       let color = "";
       let png = ""
+      
       if (aqi > 300) {
           status = "Hazardous";
           color ="8D3D3C";
@@ -51,8 +53,6 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
         } else {
           status = "Good";
           color = "D4E4F1";
-        // D4E4F1 - white
-        // 6ECD4B - green
           png = "1"
         };
         //assembles widget without jank or preloaded elements
@@ -70,13 +70,16 @@ const widget = () => (fetch(`https://api.waqi.info/feed/${sensorSite}/?token=${t
     } else {
       console.log("API limit exhausted");
     };
-  })
-  .catch(err => {
-    console.log(err);
-  }));
+  }
+  
+  await formCloud();
+}
+
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
 setInterval(widget, 5000);
+
+
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1040 - margin.left - margin.right
