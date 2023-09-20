@@ -2,8 +2,7 @@ const csvSF = "https://raw.githubusercontent.com/cowfish813/D3.js/master/csv%20f
 let sensorSite = "california/san-francisco/san-francisco-arkansas-street"; //change data here to change code
 const data = {};
 
-const sf2022 = "/Users/nickcheung/Desktop/projects/aqi/csv files/san-francisco-arkansas street, san francisco, california-air-quality1.csv"
-const sf2021 = "https://raw.githubusercontent.com/cowfish813/SF-AQI/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality.csv" //data being pulled sf-2021
+const sf2022 = "https://raw.githubusercontent.com/cowfish813/SF-AQI/master/csv%20files/san-francisco-arkansas%20street%2C%20san%20francisco%2C%20california-air-quality1.csv"
 const token = "9c249e12bd6b8b2edc5681e555d3f5454a6488b3";
 const img = document.createElement('img');
 
@@ -79,8 +78,6 @@ const widget = async () => {
 //makes the initial function call, setInterval re-calls function as a cb
 widget();
 setInterval(widget, 5000);
-
-
 
 const margin = {top: 10, right: 30, bottom: 30, left: 50},
   width = 1040 - margin.left - margin.right
@@ -177,17 +174,17 @@ d3.csv(sf2022)
 
     lines.attr("d", d => {
       if (hoveredYear === d.key) {
-        labels.attr("x", 12)
+        labels.attr("textYear", 12)
           .text(d => { return (`Year: ${year}`) })
           .style("font-family", "Helvetica Neue, Helvetica, sans-serif")
-          .style("font-size", "15")
-          // .style("z-index", "10")
-          .style("opacity", "1") //need to make text appear OVER dots
+          .style("font-size", "20")
+          .style("opacity", "20") //need to make text appear OVER dots
           .attr("transform",
             ("translate(" + x(selectedLine.date) + "," + y(selectedLine.pm25) + ")")
           );
         return line(d.values);
-      }
+      } 
+
       if (compare[d.key]) {
         return line(d.values); // from handleclick
       }
@@ -203,7 +200,6 @@ d3.csv(sf2022)
     .attr("stroke-width", 2)
     .attr("fill", "none");
 
-      // RE-ENABLE FOR PRODUCTION CODE
   const dots = svg.append("g")
     .selectAll("dot")
     .data(data)
@@ -217,6 +213,11 @@ d3.csv(sf2022)
     .attr("cy", d => (y(d.pm25)))
     .attr('opacity', '.2')
     .style("fill", d => (colors(d.year)))
+
+  //label mouse out
+  const label = d3.select("textYear");
+  const labelContent = d3.selectAll("textYear, *");
+  // labels
 
   const buttonCompare = (e, d) => { 
     const year = e.key
