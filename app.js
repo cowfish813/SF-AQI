@@ -192,6 +192,10 @@ d3.csv(sf2022)
     .attr("stroke", d => { return colors(d.key) })
   };
 
+  const removeYear = () => {
+    labels.text(year => "")
+  }
+
   const lines = svg.selectAll("lines")
     .data(aData)
     .enter()
@@ -207,17 +211,13 @@ d3.csv(sf2022)
     .append("circle")
     .on("click", showCompare)
     .on("mouseover", showLine)
+    .on("mouseout", removeYear)
     .attr("r", 5) //radius
     .attr("cx", d => {
       return (x(d.date))})
     .attr("cy", d => (y(d.pm25)))
     .attr('opacity', '.2')
     .style("fill", d => (colors(d.year)))
-
-  //label mouse out
-  const label = d3.select("textYear");
-  const labelContent = d3.selectAll("textYear, *");
-  // labels
 
   const buttonCompare = (e, d) => { 
     const year = e.key
